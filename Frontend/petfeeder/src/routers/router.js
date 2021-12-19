@@ -7,7 +7,7 @@ import Register from "../components/layout/Register.vue";
 import TheApp from "../components/layout/TheApp.vue";
 import Dashboard from "../views/page/Dashboard.vue";
 import History from "../views/page/History.vue";
-import ManageDevice from "../views/page/ManageDevice.vue";
+import ListDevice from "../views/page/ListDevice.vue";
 import ManageUser from "../views/page/ManageUser.vue";
 import SettingFeed from "../views/page/SettingFeed.vue";
 
@@ -40,9 +40,9 @@ const routes = [
         component: History,
       },
       {
-        path: "manage-device",
-        name: "ManageDevice",
-        component: ManageDevice,
+        path: "list-device",
+        name: "ListDevice",
+        component: ListDevice,
       },
       {
         path: "manage-user",

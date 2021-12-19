@@ -25,8 +25,8 @@
     >
     </base-item-navbar>
     <base-item-navbar
-      path="/app/manage-device"
-      itemText="Quản lý thiết bị"
+      path="/app/list-device"
+      itemText="Danh sách thiết bị"
       classIcon="fas fa-camera"
     >
     </base-item-navbar>

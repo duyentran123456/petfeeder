@@ -1,10 +1,10 @@
 <template>
-  <div class="manage-device">ManageDevice</div>
+  <div class="list-device">ListDevice</div>
 </template>
 
 <script>
 export default {
-  name: "ManageDevice",
+  name: "ListDevice",
   components: {},
   props: {
 

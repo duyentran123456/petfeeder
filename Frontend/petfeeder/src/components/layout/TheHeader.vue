@@ -31,7 +31,6 @@
         <img class="avatar" src="../../assets/img/avatar.png" alt="" />
         <ul class="avatar-option">
           <li @click="showFromProfile">Thông tin tài khoản</li>
-          <li>Danh sách thiết bị</li>
           <li @click="showFromChangePassword">Đổi mật khẩu</li>
           <li>Đăng xuất</li>
         </ul>
