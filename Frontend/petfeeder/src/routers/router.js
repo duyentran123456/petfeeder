@@ -2,8 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 //component
-import Login from "../views/page/Login.vue";
-import Register from "../views/page/Register.vue";
+import Login from "../components/layout/Login.vue";
+import Register from "../components/layout/Register.vue";
 import TheApp from "../components/layout/TheApp.vue";
 import Dashboard from "../views/page/Dashboard.vue";
 import History from "../views/page/History.vue";
@@ -14,6 +14,12 @@ import SettingFeed from "../views/page/SettingFeed.vue";
 Vue.use(VueRouter);
 
 const routes = [
+  {
+    path: "*",
+    redirect: "/app/dashboard",
+    name: "Dashboard",
+    component: Dashboard,
+  },
   { path: "/login", name: "Login", component: Login },
   { path: "/register", name: "Register", component: Register },
   {
