@@ -1,0 +1,17 @@
+<template>
+  <div class="login">Login</div>
+</template>
+
+<script>
+export default {
+  name: "Login",
+  components: {},
+  props: {
+
+  },
+};
+</script>
+
+<style>
+
+</style>

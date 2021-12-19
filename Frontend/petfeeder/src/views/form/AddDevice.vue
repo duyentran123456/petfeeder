@@ -35,16 +35,16 @@
             </div>
           </div>
           <div class="add-device-footer flex">
-            <BaseButton
+            <base-button
               classButton="btn-secondary"
               textButton="Hủy"
               @clickButton="hideForm"
-            ></BaseButton>
-            <BaseButton
+            ></base-button>
+            <base-button
               classButton="btn-primary"
               textButton="Thêm"
               @clickButton="addDevice"
-            ></BaseButton>
+            ></base-button>
           </div>
         </div>
       </div>

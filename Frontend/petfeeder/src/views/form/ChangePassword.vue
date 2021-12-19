@@ -37,16 +37,16 @@
             </div>
           </div>
           <div class="change-pasword-footer flex">
-            <BaseButton
+            <base-button
               classButton="btn-secondary"
               textButton="Hủy"
               @clickButton="hideForm"
-            ></BaseButton>
-            <BaseButton
+            ></base-button>
+            <base-button
               classButton="btn-primary"
               textButton="Đổi"
               @clickButton="changePassword"
-            ></BaseButton>
+            ></base-button>
           </div>
         </div>
       </div>

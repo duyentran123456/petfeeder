@@ -1,32 +1,31 @@
 <template>
   <div class="navbar">
     <base-item-navbar
-      path="/dashboard"
+      path="/app/dashboard"
       itemText="Tổng quan"
       classIcon="far fa-chart-bar"
     >
     </base-item-navbar>
-
     <base-item-navbar
-      path="/setting-feed"
+      path="/app/setting-feed"
       itemText="Đặt lịch cho ăn"
       classIcon="far fa-calendar-alt"
     >
     </base-item-navbar>
     <base-item-navbar
-      path="/history"
+      path="/app/history"
       itemText="Lịch sử cho ăn"
       classIcon="fas fa-history"
     >
     </base-item-navbar>
     <base-item-navbar
-      path="/manage-user"
+      path="/app/manage-user"
       itemText="Quản lý người dùng"
       classIcon="fas fa-users-cog"
     >
     </base-item-navbar>
     <base-item-navbar
-      path="/manage-device"
+      path="/app/manage-device"
       itemText="Quản lý thiết bị"
       classIcon="fas fa-camera"
     >

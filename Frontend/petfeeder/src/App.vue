@@ -1,16 +1,25 @@
 <template>
-  <the-app></the-app>
+  <div>
+    <!-- <login></login>
+    <register></register>
+    <the-app></the-app> -->
+    <router-view />
+  </div>
 </template>
 
 <script>
-import TheApp from './components/layout/TheApp.vue'
+import Login from "./views/page/Login.vue";
+import Register from "./views/page/Register.vue";
+import TheApp from "./components/layout/TheApp.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    TheApp,
-  }
-}
+    // Login,
+    // Register,
+    // TheApp,
+  },
+};
 </script>
 
 <style>

@@ -135,16 +135,16 @@
             </div>
           </div>
           <div class="profile-footer flex">
-            <BaseButton
+            <base-button
               classButton="btn-secondary"
               textButton="Đóng"
               @clickButton="hideForm"
-            ></BaseButton>
-            <BaseButton
+            ></base-button>
+            <base-button
               classButton="btn-primary"
               textButton="Lưu"
               @clickButton="saveProfile"
-            ></BaseButton>
+            ></base-button>
           </div>
         </div>
       </div>

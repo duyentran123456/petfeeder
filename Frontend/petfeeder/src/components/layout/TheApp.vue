@@ -1,9 +1,9 @@
 <template>
-  <div class="app">
+  <div ref="viewPage" class="app">
     <the-header></the-header>
     <div class="content flex">
       <the-navbar></the-navbar>
-      <router-view />
+      <router-view ref="viewPage"/>
       <add-device v-if="formAddDevice"></add-device>
       <profile v-if="formProfile"></profile>
       <change-password v-if="formChangePassword"></change-password>
@@ -174,6 +174,129 @@ body {
   background-color: #f3f3f3 !important;
   color: #ccc !important;
   border-radius: 0 !important;
+}
+
+/* Css cho combobox */
+.multiselect {
+	flex: 1;
+}
+
+.multiselect__select {
+	height: 40px !important;
+	width: 30px !important;
+}
+
+.multiselect__tags {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: space-between;
+	min-height: 42px !important;
+	height: 42px !important;
+	border-radius: 4px !important;
+	border: 1px solid #cccccc !important;
+	font-size: 1.6rem !important;
+    color: #212121 !important;
+	padding: 5px 40px 0 8px !important;
+}
+
+.focus-combobox {
+	border: 1px solid #08bf1e !important;
+}
+
+.multiselect__tags input::placeholder {
+	color: #bebebe;
+	bottom: 12px;
+}
+
+.multiselect__placeholder {
+	display: none !important;
+}
+
+.multiselect, .multiselect__input, .multiselect__single {
+	font-size: 1.6rem !important;
+}
+
+.multiselect__input, .multiselect__single {
+	top: 2px
+}
+
+.multiselect__option--highlight {
+	background: #E5F3FF !important;
+	color: var(--black-color) !important;
+}
+
+.multiselect__option--selected.multiselect__option--highlight:after {
+	display: none;
+}
+
+.multiselect__option--highlight:after {
+	display: none;
+}
+
+/* Mỗi item */
+.multiselect__option {
+	position: relative;
+}
+
+.multiselect__option span {
+	padding-left: 6px;
+}
+
+/* Item đang được chọn */
+.multiselect__option--selected {
+	color: #35495e !important;
+	background: #f3f3f3 !important;
+	font-weight: 500 !important;
+}
+
+.multiselect__option--selected:after {
+	display: none;
+}
+
+.multiselect__option--selected:hover {
+	color: #35495e !important;
+	background: #f3f3f3 !important;
+	font-weight: 500 !important;
+}
+
+.multiselect__tags-wrap {
+	display: flex !important;
+	align-items: center !important;
+}
+
+.multiselect__tag {
+	margin-right: 6px !important;
+}
+
+.employee-detail-form-column-subject .multiselect__tag {
+	max-width: 82px !important;
+}
+
+.employee-detail-form-column-equipmentroom .multiselect__tag {
+	max-width: 120px !important;
+}
+
+.multiselect__strong {
+	display: none !important;
+}
+
+.multiselect__content-wrapper {
+  border-radius: 5px;
+}
+
+.multiselect__content-wrapper::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.multiselect__content-wrapper::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #a8a8a8;
+}
+
+.multiselect__content-wrapper::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: #f1f1f2;
 }
 
 /* css trang app */

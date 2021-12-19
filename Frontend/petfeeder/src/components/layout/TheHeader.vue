@@ -53,14 +53,28 @@ export default {
   },
   data() {
     return {
-      valueDevice: { deviceID: "1", deviceName: "Thiết bị 1" },
+      valueDevice: { deviceID: 1, deviceName: "Thiết bị 1" },
       optionsDevice: [
-        { deviceID: "2", deviceName: "Thiết bị 1" },
-        { deviceID: "3", deviceName: "Thiết bị 2" },
-        { deviceID: "4", deviceName: "Thiết bị 3" },
-        { deviceID: "5", deviceName: "Thiết bị 4" },
+        { deviceID: 2, deviceName: "Thiết bị 1" },
+        { deviceID: 3, deviceName: "Thiết bị 2" },
+        { deviceID: 4, deviceName: "Thiết bị 3" },
+        { deviceID: 5, deviceName: "Thiết bị 4" },
       ],
     };
+  },
+  mounted() {
+    //Xử lý hiển thị text không có kết quả khi tìm kiếm trong combobox
+    let spanText = document.querySelectorAll(".multiselect__content li");
+    spanText.forEach((span) => {
+      // console.log(span.innerText);
+      if (
+        span.innerText ==
+        "No elements found. Consider changing the search query."
+      ) {
+        span.innerText = "Không có kết quả";
+      }
+    });
+    
   },
   methods: {
     ...mapMutations(['formAddDevice', 'formProfile', 'formChangePassword']),
@@ -179,7 +193,7 @@ export default {
 
 .avatar-option {
   display: none;
-  z-index: 1;
+  z-index: 10;
   position: absolute;
   top: 58px;
   right: 1px;

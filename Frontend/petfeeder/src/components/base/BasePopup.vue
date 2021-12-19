@@ -11,24 +11,24 @@
                     {{ popupText }}
                 </div>
                 <div class="popup-content-footer flex">
-                    <BaseButton
+                    <base-button
                         v-if="button1"
                         classButton="btn-secondary"
                         :textButton="textButton1"
                         @clickButton="$emit('clickButton1')"
-                    ></BaseButton>
-                    <BaseButton
+                    ></base-button>
+                    <base-button
                         v-if="button2"
                         classButton="btn-secondary"
                         :textButton="textButton2"
                         @clickButton="$emit('clickButton2')"
-                    ></BaseButton>
-                    <BaseButton
+                    ></base-button>
+                    <base-button
                         v-if="button3"
                         classButton="btn-primary"
                         :textButton="textButton3"
                         @clickButton="$emit('clickButton3')"
-                    ></BaseButton>
+                    ></base-button>
                 </div>
             </div>
         </VueDragResize>
