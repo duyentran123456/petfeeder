@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar">
+  <div class="_navbar">
     <base-item-navbar
       path="/app/dashboard"
       itemText="Tổng quan"
@@ -44,7 +44,7 @@ export default {
 </script>
 
 <style>
-.navbar {
+._navbar {
   height: 100%;
   width: 210px;
   background-color: var(--background-header-sidebar);
