@@ -8,30 +8,25 @@
          </div>
          <div class="col-4 p-5">
            <div class="text-center"><img class="mb-5 rounded-circle" src="../../assets/img/logo.jpg" alt="photo" width="200" height="200"></div>
-           <h1 class="mb-5 text-center">Đăng ký</h1>
+           <h1 class="mb-5 text-center">Quên mật khẩu</h1>
            <form action="" class="d-flex flex-column px-3 mb-5">
               <div class="form-group mb-3">
                 <label for="" class="form-label" >Tên đăng nhập</label>
-                <input type="text" class="form-control fs-3">
+                <input type="text" class="form-control fs-3 bg-gray">
               </div>
-              <div class="form-group mb-3">
-                <label for="" class="form-label" >Email</label>
-                <input type="text" class="form-control fs-3">
-              </div>
-              <div class="form-group mb-4">
-                <label for="" class="form-label" >Mật khẩu</label>
-                <input type="text" class="form-control fs-3" >
-              </div>
-              <div class="form-group p-space">
-                <label for="" class="form-label" >Nhập lại mật khẩu</label>
-                <input type="text" class="form-control fs-3" >
+              <div class="form-group mb-5">
+                <label for="" class="form-label" >Nhập lại mật khẩu mới</label>
+                <input type="text" class="form-control fs-3 bg-gray" >
               </div>
               <div class="text-center">
-                <button class="btn btn-primary fs-4 w-25 me-3 rounded" >Đăng ký</button>
-                <a href="/login" class="text-decoration-none text-muted" >Đăng nhập</a>
+                <button class="btn btn-primary fs-4 w-50" >Đổi mật khẩu</button>
               </div>
             </form>
 
+            <div class="text-center"> 
+              <a href="/register" class="text-decoration-none text-white me-5">Đăng ký</a>
+              <a href="/login" class="text-decoration-none text-white">Đăng nhập</a>
+            </div>
          </div>
        </div>
      </div>
@@ -40,7 +35,7 @@
 
 <script>
 export default {
-  name: "Register",
+  name: "ForgotPassword",
   components: {},
   props: {
 
@@ -53,7 +48,7 @@ export default {
     background: #a89f9f;
   }
 
-  .form-control{
+  .bg-gray{
     background: #cfc8c8;
   }
 
@@ -81,5 +76,8 @@ export default {
     top: 2rem;
     font-style: bold;
     font-size: 3rem;
+
+
+
   }
 </style>

@@ -4,6 +4,7 @@ import VueRouter from "vue-router";
 //component
 import Login from "../components/layout/Login.vue";
 import Register from "../components/layout/Register.vue";
+import ForgotPassword from "../components/layout/ForgotPassword.vue";
 import TheApp from "../components/layout/TheApp.vue";
 import Dashboard from "../views/page/Dashboard.vue";
 import History from "../views/page/History.vue";
@@ -22,6 +23,7 @@ const routes = [
   },
   { path: "/login", name: "Login", component: Login },
   { path: "/register", name: "Register", component: Register },
+  { path: "/forgot-password", name: "ForgotPassword", component: ForgotPassword},
   {
     path: "/app",
     redirect: "/app/dashboard",
