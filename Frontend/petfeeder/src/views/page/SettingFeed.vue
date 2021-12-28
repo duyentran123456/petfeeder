@@ -197,6 +197,10 @@
             </div>
           </div>
         </div>
+        <div class="add-time-feeder">
+          <button class="btn btn-success"><span class="fw-bold">+</span></button>
+          <span class="fw-bold">Thêm mới lịch trình</span>
+        </div>
       </div>
       <div class="col-5 p-5">
         <div class="sticky-top w-75 feeder-container border flex flex-column justify-content-center align-items-center py-5 shadow me-3 mt-3">
@@ -297,5 +301,11 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+.add-time-feeder{
+  position: absolute;
+  bottom: 2rem;
+  right: 28rem;
 }
 </style>
