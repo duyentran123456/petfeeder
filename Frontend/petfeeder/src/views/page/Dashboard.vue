@@ -3,10 +3,10 @@
     <div class="w-75 flex flex-column align-items-center">
       <h1 class="mb-5 fw-bold"><i class="far fa-chart-bar"></i> Tổng quan</h1>
       <div class="text-white flex w-75 mb-3">
-        <div class="bg-primary p-3 w-50 me-4 text-center shadow">
+        <div class="bg-primary p-3 w-50 me-4 text-center shadow rounded">
           <span>50</span> thiết bị
         </div>
-        <div class="bg-success p-3 w-50 text-center shadow">
+        <div class="bg-success p-3 w-50 text-center shadow rounded">
           <span>100</span> người dùng
         </div>  
       </div>
@@ -28,7 +28,7 @@
             <td>Nghia</td>
             <td>Id123</td>
             <td>
-              <div class="border border-success status-icon bg-success text-white fw-bold">On</div>
+              <div class="border border-success status-icon bg-success rounded text-white fw-bold">On</div>
             </td>
           </tr>
           <tr>
@@ -36,7 +36,7 @@
             <td>Nghia</td>
             <td>Id123</td>
             <td>
-              <div class="border border-success status-icon bg-success text-white fw-bold">On</div>
+              <div class="border border-success status-icon rounded bg-success text-white fw-bold">On</div>
             </td>
           </tr>
           <tr>
@@ -44,7 +44,7 @@
             <td>Nghia</td>
             <td>Id123</td>
             <td>
-              <div class="border border-success status-icon bg-success text-white fw-bold">On</div>
+              <div class="border border-success status-icon rounded bg-success text-white fw-bold">On</div>
             </td>
           </tr>
           <tr>
@@ -52,7 +52,7 @@
             <td>Nghia</td>
             <td>Id123</td>
             <td>
-              <div class="border border-success status-icon bg-danger text-white fw-bold">Off</div>
+              <div class="border border-success status-icon rounded bg-danger text-white fw-bold">Off</div>
             </td>
           </tr>
           <tr>
@@ -60,7 +60,7 @@
             <td>Nghia</td>
             <td>Id123</td>
             <td>
-              <div class="border border-success status-icon bg-danger text-white fw-bold">Off</div>
+              <div class="border border-success status-icon rounded bg-danger text-white fw-bold">Off</div>
             </td>
           </tr>
           <tr>
@@ -68,7 +68,7 @@
             <td>Nghia</td>
             <td>Id123</td>
             <td>
-              <div class="border border-success status-icon bg-danger text-white fw-bold">Off</div>
+              <div class="border border-success status-icon rounded bg-danger text-white fw-bold">Off</div>
             </td>
           </tr>
           <tr>
@@ -76,7 +76,7 @@
             <td>Nghia</td>
             <td>Id123</td>
             <td>
-              <div class="border border-success status-icon bg-danger text-white fw-bold">Off</div>
+              <div class="border border-success status-icon rounded bg-danger text-white fw-bold">Off</div>
             </td>
           </tr>
           <tr>
@@ -84,7 +84,7 @@
             <td>Nghia</td>
             <td>Id123</td>
             <td>
-              <div class="border border-success status-icon bg-danger text-white fw-bold">Off</div>
+              <div class="border border-success status-icon rounded bg-danger text-white fw-bold">Off</div>
             </td>
           </tr>
           <tr>
@@ -92,7 +92,7 @@
             <td>Nghia</td>
             <td>Id123</td>
             <td>
-              <div class="border border-success status-icon bg-danger text-white fw-bold">Off</div>
+              <div class="border border-success status-icon rounded bg-danger text-white fw-bold">Off</div>
             </td>
           </tr>
           <tr>
@@ -100,7 +100,7 @@
             <td>Nghia</td>
             <td>Id123</td>
             <td>
-              <div class="border border-success status-icon bg-danger text-white fw-bold">Off</div>
+              <div class="border border-success status-icon rounded bg-danger text-white fw-bold">Off</div>
             </td>
           </tr>
         </tbody>

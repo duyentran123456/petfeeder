@@ -17,42 +17,42 @@
             <th scope="row">1</th>
             <td>device123</td>
             <td>Máy cho ăn 1</td>
-            <td><div class="border border-success status-icon bg-success text-white fw-bold">On</div></td>
+            <td><div class="border border-success status-icon rounded bg-success text-white fw-bold">On</div></td>
             <td><i class="far fa-trash-alt btn-delete"></i></td>
           </tr>
           <tr>
             <th scope="row">1</th>
             <td>device123</td>
             <td>Máy cho ăn 1</td>
-            <td><div class="border border-success status-icon bg-success text-white fw-bold">On</div></td>
+            <td><div class="border border-success status-icon rounded bg-success text-white fw-bold">On</div></td>
             <td><i class="far fa-trash-alt btn-delete"></i></td>
           </tr>
           <tr>
             <th scope="row">1</th>
             <td>device123</td>
             <td>Máy cho ăn 1</td>
-            <td><div class="border border-success status-icon bg-success text-white fw-bold">On</div></td>
+            <td><div class="border border-success status-icon rounded bg-success text-white fw-bold">On</div></td>
             <td><i class="far fa-trash-alt btn-delete"></i></td>
           </tr>
           <tr>
             <th scope="row">1</th>
             <td>device123</td>
             <td>Máy cho ăn 1</td>
-            <td><div class="border border-success status-icon bg-success text-white fw-bold">On</div></td>
+            <td><div class="border border-success status-icon rounded bg-success text-white fw-bold">On</div></td>
             <td><i class="far fa-trash-alt btn-delete"></i></td>
           </tr>
           <tr>
             <th scope="row">1</th>
             <td>device123</td>
             <td>Máy cho ăn 1</td>
-            <td><div class="border border-success status-icon bg-success text-white fw-bold">On</div></td>
+            <td><div class="border border-success status-icon rounded bg-success text-white fw-bold">On</div></td>
             <td><i class="far fa-trash-alt btn-delete"></i></td>
           </tr>
           <tr>
             <th scope="row">1</th>
             <td>device123</td>
             <td>Máy cho ăn 1</td>
-            <td><div class="border border-success status-icon bg-danger text-white fw-bold">Off</div></td>
+            <td><div class="border border-success status-icon rounded bg-danger text-white fw-bold">Off</div></td>
             <td><i class="far fa-trash-alt btn-delete"></i></td>
           </tr>
         </tbody>
