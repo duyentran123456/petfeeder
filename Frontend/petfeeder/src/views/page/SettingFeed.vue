@@ -4,15 +4,8 @@
         <h2>Cho ăn theo giờ</h2>
         <div class="calendar-feeder w-100">
           <div class="calender-feeder-item border card shadow mb-5">
-            <div class="card-header">
-              <div class="row">
-                <div class="col-6 flex justify-content-end">
-                  title 1
-                </div>
-                <div class="col-6 flex justify-content-end">
-                  <button class="btn btn-close" ></button>
-                </div>
-              </div>
+            <div class="card-header flex justify-content-end"> 
+              <button class="btn btn-close" ></button>
             </div>
             <div class="card-body">
               <table class="gfg">
@@ -102,15 +95,8 @@
         </div>
         <div class="calendar-feeder w-100">
           <div class="calender-feeder-item border card shadow">
-            <div class="card-header">
-              <div class="row">
-                <div class="col-6 flex justify-content-end">
-                  title 1
-                </div>
-                <div class="col-6 flex justify-content-end">
-                  <button class="btn btn-close" ></button>
-                </div>
-              </div>
+            <div class="card-header flex justify-content-end">
+              <button class="btn btn-close" ></button>
             </div>
             <div class="card-body">
               <table class="gfg">
