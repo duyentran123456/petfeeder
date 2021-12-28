@@ -1,5 +1,5 @@
 <template>
-  <div class="setting-feed row w-100 fs-4 overflow-auto">
+  <div class="setting-feed row flex-grow-1 fs-4 overflow-auto">
       <div class="col-7 px-5 py-3 flex flex-column align-items-center">
         <h2>Cho ăn theo giờ</h2>
         <div class="calendar-feeder w-100">
