@@ -26,14 +26,14 @@ const login = async (req, res, next) => {
     if (err) {
       return res.status(500).json(apiResponse({ status: APIStatus.ERROR, msg: 'Internal Server Error' }))
     }
-    return res.status(200).json(apiResponse({ status: APIStatus.FAIL, msg: 'Username or password wrong' }))
+    return res.status(400).json(apiResponse({ status: APIStatus.FAIL, msg: 'Username or password wrong' }))
   })
 }
 
 const signup = async (req, res, next) => {
   const { email, phone, username, password } = req.body
   const [user1, user2, user3] = await Promise.all([getUserDb({ email }), getUserDb({ phone }), getUserDb({ username })])
-  if (user1 || user2 || user3) { return res.status(400).json(apiResponse({ status: APIStatus.FAIL, msg: 'email or username existed' })) }
+  if (user1 || user2 || user3) { return res.status(409).json(apiResponse({ status: APIStatus.FAIL, msg: 'email or username existed' })) }
 
   const hashedPw = await hashPassword(password)
   const user = await createUserDb({ email, phone, username, password: hashedPw })
@@ -63,7 +63,7 @@ const loginAdmin = async (req, res, next) => {
     if (err) {
       return res.status(500).json(apiResponse({ status: APIStatus.ERROR, msg: 'Internal Server Error' }))
     }
-    return res.status(200).json(apiResponse({ status: APIStatus.FAIL, msg: 'Username or password wrong' }))
+    return res.status(400).json(apiResponse({ status: APIStatus.FAIL, msg: 'Username or password wrong' }))
   })
 }
 
