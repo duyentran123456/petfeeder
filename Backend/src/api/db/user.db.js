@@ -1,24 +1,11 @@
 const User = require('../models/user.model')
 
-const getUserDb = async (filter) => {
-  const user = await User.findOne(filter)
-
-  return user
-}
-
-// get user info without password
-const getUserInfoDb = async (filter) => {
-  const user = await User.findOne(filter, { password: 0, createdAt: 0, updatedAt: 0 })
-
-  return user
-}
-
-const getAllUsersDb = async (query) => {
+const getAllUserDb = async (query) => {
   const { page, records, filter } = query
 
   const [totalUsers, users] = await Promise.all([
     User.find(filter).count(),
-    User.find(filter, { password: 0, createdAt: 0, updatedAt: 0 })
+    User.find(filter)
       .skip((page - 1) * records)
       .limit(records)
   ])
@@ -29,39 +16,36 @@ const getAllUsersDb = async (query) => {
   }
 }
 
-const updateUserInfoDb = async (query) => {
-  const { _id, newInfo } = query
-  const { firstName, lastName, gender, dateOfBirth } = newInfo
+const getUserDb = async (query) => {
+  const user = await User.findOne(query)
 
-  const user = await User.findOne({ _id })
-  if (!user) return null
-
-  user.firstName = firstName
-  user.lastName = lastName
-  user.gender = gender
-  user.dateOfBirth = dateOfBirth
-
-  const rs = await user.save()
-
-  return rs
+  return user
 }
 
-const updateUserAvatarDb = async (query) => {
-  const { _id, avatar } = query
-  const user = await User.findOne({ _id })
-  if (!user) return null
+const createUserDb = async (query) => {
+  const user = await new User(query).save()
 
+  return user
+}
+
+const updateUserDb = async (query) => {
+  const { userId, newInfo } = query
+  const { phone, gender, avatar, fullName, address } = newInfo
+
+  const user = await User.findById(userId)
+  user.phone = phone
+  user.gender = gender
   user.avatar = avatar
+  user.fullName = fullName
+  user.address = address
 
   const rs = await user.save()
-
   return rs
 }
 
 module.exports = {
+  getAllUserDb,
   getUserDb,
-  getUserInfoDb,
-  getAllUsersDb,
-  updateUserInfoDb,
-  updateUserAvatarDb,
+  createUserDb,
+  updateUserDb
 }

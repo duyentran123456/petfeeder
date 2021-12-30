@@ -1,48 +1,53 @@
-const { StatusCodes } = require('http-status-codes')
 const jwt = require('jsonwebtoken')
-
 const { jwtKey } = require('../../configs')
-const { getAccountDb } = require('../db/account.db')
-const User = require('../models/user.model')
-const apiResponse = require('../utils/apiResponse')
 const APIStatus = require('../constants/APIStatus')
+const { getAdminDb } = require('../db/admin.db')
+const { getUserDb } = require('../db/user.db')
+const apiResponse = require('../utils/apiResponse')
 
+const authUser = async (req, res, next) => {
+  const token = getHeaderToken(req)
+  if (!token) return res.status(401).json(apiResponse({ status: APIStatus.FAIL, msg: 'You are not authorized' }))
 
-const decodeAccountToken = async (token) => {
   try {
     const decode = jwt.verify(token, jwtKey)
-    const account = await getAccountDb({ _id: decode._id })
+    const user = await getUserDb({ _id: decode._id })
+    if (!user) return res.status(400).json(apiResponse({ status: APIStatus.FAIL, msg: 'Invalid token' }))
 
-    return account
-  } catch (error) {
-    return null
+    req.user = user
+    next()
+  } catch (err) {
+    console.log(err)
+    return res.status(400).json(apiResponse({ status: APIStatus.FAIL, msg: 'Invalid token' }))
   }
 }
 
-const auth = async (req, res, next) => {
-  const originalToken =
-    req.header('Authorization') || req.header('x-access-token')
-  if (!originalToken) {
-    return res
-      .status(StatusCodes.UNAUTHORIZED)
-      .json(
-        apiResponse({ status: APIStatus.FAIL, msg: 'You dont have permission' })
-      )
+const authAdmin = async (req, res, next) => {
+  const token = getHeaderToken(req)
+  if (!token) return res.status(401).json(apiResponse({ status: APIStatus.FAIL, msg: 'You are not authorized' }))
+
+  try {
+    const decode = jwt.verify(token, jwtKey)
+    const admin = await getAdminDb({ _id: decode._id })
+    if (!admin) return res.status(400).json(apiResponse({ status: APIStatus.FAIL, msg: 'Invalid token' }))
+
+    req.admin = admin
+    next()
+  } catch (err) {
+    console.log(err)
+    return res.status(400).json(apiResponse({ status: APIStatus.FAIL, msg: 'Invalid token' }))
   }
+}
+
+const getHeaderToken = (req) => {
+  const originalToken = req.header('Authorization') || req.header('x-access-token')
+  if (!originalToken) return null
 
   const token = originalToken.replace('Bearer ', '')
-  const account = await decodeAccountToken(token)
-  if (!account) {
-    return res
-      .status(StatusCodes.BAD_REQUEST)
-      .json(apiResponse({ status: APIStatus.FAIL, msg: 'Invalid token' }))
-  }
-
-  const user = await new User({accountId: account._id}).save()
-
-  req.user = user
-
-  next()
+  return token
 }
 
-module.exports = auth
+module.exports = {
+  authUser,
+  authAdmin
+}

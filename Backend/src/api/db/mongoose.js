@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const { mongodbUri } = require('../../configs/config')
+const { mongodbUri } = require('../../configs')
 
 mongoose.connect(mongodbUri).catch((error) => console.log(error.message))
 

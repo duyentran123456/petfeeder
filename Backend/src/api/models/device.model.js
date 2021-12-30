@@ -1,15 +1,42 @@
 const mongoose = require('mongoose')
 
-const deviceSchema = new mongoose.Schema({
-    id: {
-        type: String,
-        required: true,
-        unique: true
+const DeviceSchema = new mongoose.Schema({
+  deviceId: {
+    type: String,
+    required: true
+  },
+  deviceName: {
+    type: String
+  },
+  onClickFeedWeight: {
+    type: Number,
+    default: 100
+  },
+  petDetectedFeedWeight: {
+    status: {
+      type: String,
+      enum: ['on', 'off'],
+      default: 'off'
     },
-    password: {
-        type: String,
-        required: true
+    weight: {
+      type: Number,
+      default: 100
     }
+  },
+  presetFeed: [{
+    status: {
+      type: String,
+      enum: ['on', 'off'],
+      default: 'on'
+    },
+    weight: {
+      type: Number,
+      default: 100
+    },
+    date: {
+      type: String
+    }
+  }]
 })
 
-module.exports = mongoose.Schema('Device', deviceSchema)
+module.exports = mongoose.model('Device', DeviceSchema)
