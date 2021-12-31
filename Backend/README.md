@@ -26,6 +26,7 @@ Then test with Postman, you may need to change some of the request body data
 ```json
 {
     "username" : "admin",
+    "email" : "your-email@gmail.com",
     "password" : "$2a$10$1JEXONHdHpqUgXzBxslDD.1.VKn4EcdSePWqn3b3s9QJWa.MjY/ZC"
 }
 ```

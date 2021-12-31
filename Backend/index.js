@@ -6,6 +6,8 @@ const path = require('path')
 const APIStatus = require('./src/api/constants/APIStatus')
 const { port } = require('./src/configs')
 const authRouter = require('./src/api/routes/auth.route')
+const userRouter = require('./src/api/routes/user.route')
+const adminRouter = require('./src/api/routes/admin.route')
 const apiResponse = require('./src/api/utils/apiResponse')
 
 require('./src/api/db/mongoose')
@@ -18,6 +20,8 @@ app.use(fileUpload({ parseNested: true }))
 app.use(express.static(path.join(__dirname, './src/api/static')))
 
 app.use('/auth', authRouter)
+app.use('/api/users', userRouter)
+app.use('/api/admins', adminRouter)
 
 app.use((err, req, res, next) => {
   if (err instanceof ValidationError) {

@@ -10,6 +10,21 @@
 			"item": [
 				{
 					"name": "Login user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var JsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"if(JsonData.status === \"success\") {\r",
+									"    postman.setEnvironmentVariable(\"userToken\", JsonData.data.token)\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -23,11 +38,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8000/auth/user/login",
+							"raw": "{{url}}/auth/user/login",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8000",
 							"path": [
 								"auth",
 								"user",
@@ -39,12 +53,27 @@
 				},
 				{
 					"name": "Sign up new user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var JsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"if(JsonData.status === \"success\") {\r",
+									"    postman.setEnvironmentVariable(\"userToken\", JsonData.data.token)\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"tranthanhduyenk63@gmail.com\",\r\n    \"username\": \"duyen\",\r\n    \"password\": \"duyen\"\r\n}",
+							"raw": "{\r\n    \"email\": \"tranthanhduyenk63@gmaill.com\",\r\n    \"username\": \"duyennn\",\r\n    \"password\": \"duyen\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -52,11 +81,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8000/auth/user/signup",
+							"raw": "{{url}}/auth/user/signup",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8000",
 							"path": [
 								"auth",
 								"user",
@@ -68,6 +96,21 @@
 				},
 				{
 					"name": "Admin login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var JsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"if(JsonData.status === \"success\") {\r",
+									"    postman.setEnvironmentVariable(\"adminToken\", JsonData.data.token)\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -81,11 +124,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8000/auth/admin/login",
+							"raw": "{{url}}/auth/admin/login",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8000",
 							"path": [
 								"auth",
 								"admin",
@@ -96,6 +138,90 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Change password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"oldPassword\": \"duyen\",\r\n    \"newPassword\": \"duyen\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/users/change-password",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Change password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"oldPassword\": \"admin\",\r\n    \"newPassword\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/admins/change-password",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"admins",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "userToken",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWNkYzZlYzljNzI2ZGE3NjgwYjRjZGEiLCJpYXQiOjE2NDA5NDA3NDIsImV4cCI6MTY0MDk3Njc0Mn0.BYMH26JBtkuL5k0Q5s3smsmBhvgb2AWOeQ3gLURNm8c"
 		}
 	]
 }

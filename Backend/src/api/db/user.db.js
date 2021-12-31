@@ -43,9 +43,19 @@ const updateUserDb = async (query) => {
   return rs
 }
 
+const updateUserPwDb = async (query) => {
+  const { userId, password } = query
+  const user = await User.findById(userId)
+  user.password = password
+
+  const rs = await user.save()
+  return rs
+}
+
 module.exports = {
   getAllUserDb,
   getUserDb,
   createUserDb,
-  updateUserDb
+  updateUserDb,
+  updateUserPwDb
 }
