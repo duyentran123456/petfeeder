@@ -15,7 +15,14 @@ const signupValidation = {
   })
 }
 
+const forgetPasswordValidation = {
+  body: Joi.object({
+    email: Joi.string().email().required()
+  })
+}
+
 module.exports = {
   loginValidation,
-  signupValidation
+  signupValidation,
+  forgetPasswordValidation
 }

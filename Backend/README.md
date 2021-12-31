@@ -30,3 +30,4 @@ Then test with Postman, you may need to change some of the request body data
     "password" : "$2a$10$1JEXONHdHpqUgXzBxslDD.1.VKn4EcdSePWqn3b3s9QJWa.MjY/ZC"
 }
 ```
+2. `EMAIL_PASSWORD` in `.env`: Go to your Google account -> Security -> Application password, paste that password to `.env`

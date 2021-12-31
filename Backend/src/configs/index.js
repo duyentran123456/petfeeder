@@ -3,6 +3,10 @@ require('dotenv-safe').config()
 const port = process.env.PORT
 const jwtKey = process.env.JWT_KEY
 const mongodbUri = process.env.MONGODB_URI
+const emailHost = process.env.EMAIL_HOST
+const emailPort = process.env.EMAIL_PORT
+const emailUser = process.env.EMAIL_USER
+const emailPassword = process.env.EMAIL_PASSWORD
 
 const userConfig = {
   genders: {
@@ -10,6 +14,13 @@ const userConfig = {
     FEMALE: 'Female',
     OTHER: 'Other'
   }
+}
+
+const emailConfig = {
+  host: emailHost,
+  port: emailPort,
+  user: emailUser,
+  pass: emailPassword
 }
 
 module.exports = {
@@ -20,5 +31,6 @@ module.exports = {
   port,
   mongodbUri,
   jwtKey,
-  userConfig
+  userConfig,
+  emailConfig
 }
