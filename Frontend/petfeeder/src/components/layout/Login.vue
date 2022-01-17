@@ -1,5 +1,5 @@
 <template>
-  <div class="login text-white fs-3">
+  <div class="login text-dark fs-3">
      <div class="container">
        <div class="row vh-100">
          <div class="col-8 layout text-dark">
@@ -12,11 +12,11 @@
            <form action="" class="d-flex flex-column px-3 mb-5">
               <div class="form-group mb-3">
                 <label for="" class="form-label" >Tên đăng nhập</label>
-                <input type="text" class="form-control fs-3 bg-gray">
+                <input type="text" class="form-control fs-3">
               </div>
               <div class="form-group mb-4">
                 <label for="" class="form-label" >Mật khẩu</label>
-                <input type="password" class="form-control fs-3 bg-gray" >
+                <input type="password" class="form-control fs-3" >
               </div>
               <div class="text-center">
                 <button class="btn btn-primary fs-4 w-50" >Đăng nhập</button>
@@ -45,11 +45,33 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
   .bg-gray{
     background: #cfc8c8;
   }
 
+  .col-4.layout{
+    background: #cfc8c8;
+  }
+  
+  .col-8.layout{
+    background-image: url("../../assets/img/pet-background.jpg");
+    background-repeat: no-repeat;
+    position: relative;
+  }
+
+  .p-space{
+    padding-bottom: 10rem;
+  }
+
+  .text-title{
+    color: red;
+    position: absolute;
+    right: 10rem;
+    top: 2rem;
+    font-style: bold;
+    font-size: 3rem;
+  }
   .col-8 .sologan{
     position: absolute;
     top: 52rem;

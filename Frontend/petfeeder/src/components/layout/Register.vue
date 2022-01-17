@@ -1,5 +1,5 @@
 <template>
-  <div class="login text-white fs-3">
+  <div class="login text-dark fs-3">
      <div class="container">
        <div class="row vh-100">
          <div class="col-8 layout text-dark">
@@ -18,16 +18,12 @@
                 <label for="" class="form-label" >Email</label>
                 <input type="text" class="form-control fs-3">
               </div>
-              <div class="form-group mb-4">
+              <div class="form-group mb-5">
                 <label for="" class="form-label" >Mật khẩu</label>
                 <input type="password" class="form-control fs-3" >
               </div>
-              <div class="form-group p-space">
-                <label for="" class="form-label" >Nhập lại mật khẩu</label>
-                <input type="password" class="form-control fs-3" >
-              </div>
               <div class="text-center">
-                <button class="btn btn-primary fs-4 w-25 me-3 rounded" >Đăng ký</button>
+                <button class="btn btn-primary fs-5 w-25 me-3 rounded" >Đăng ký</button>
                 <a href="/login" class="text-decoration-none text-muted" >Đăng nhập</a>
               </div>
             </form>
@@ -37,7 +33,6 @@
      </div>
   </div>
 </template>
-
 <script>
 export default {
   name: "Register",
@@ -47,21 +42,12 @@ export default {
   },
 };
 </script>
-
-<style>
-  .col-4 .layout{
-    background: #a89f9f;
-  }
-
-  .form-control{
+<style scoped>
+  .col-4.layout{
     background: #cfc8c8;
   }
-
-  .p-space{
-    padding-bottom: 10rem;
-  }
   
-  .col-8 .layout{
+  .col-8.layout{
     background-image: url("../../assets/img/pet-background.jpg");
     background-repeat: no-repeat;
     position: relative;

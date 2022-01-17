@@ -1,5 +1,5 @@
 <template>
-  <div class="login text-white fs-3">
+  <div class="login text-dark fs-3">
      <div class="container">
        <div class="row vh-100">
          <div class="col-8 layout text-dark">
@@ -12,11 +12,11 @@
            <form action="" class="d-flex flex-column px-3 mb-5">
               <div class="form-group mb-3">
                 <label for="" class="form-label" >Tên đăng nhập</label>
-                <input type="text" class="form-control fs-3 bg-gray">
+                <input type="text" class="form-control fs-3">
               </div>
               <div class="form-group mb-5">
                 <label for="" class="form-label" >Nhập lại mật khẩu mới</label>
-                <input type="password" class="form-control fs-3 bg-gray" >
+                <input type="password" class="form-control fs-3" >
               </div>
               <div class="text-center">
                 <button class="btn btn-primary fs-4 w-50" >Đổi mật khẩu</button>
@@ -24,8 +24,8 @@
             </form>
 
             <div class="text-center"> 
-              <a href="/register" class="text-decoration-none text-white me-5">Đăng ký</a>
-              <a href="/login" class="text-decoration-none text-white">Đăng nhập</a>
+              <a href="/register" class="text-decoration-none me-5">Đăng ký</a>
+              <a href="/login" class="text-decoration-none">Đăng nhập</a>
             </div>
          </div>
        </div>
@@ -43,9 +43,15 @@ export default {
 };
 </script>
 
-<style>
-  .bg-gray{
+<style scoped>
+  .col-4.layout{
     background: #cfc8c8;
+  }
+  
+  .col-8.layout{
+    background-image: url("../../assets/img/pet-background.jpg");
+    background-repeat: no-repeat;
+    position: relative;
   }
 
   .p-space{
