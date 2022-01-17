@@ -73,7 +73,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"tranthanhduyenk63@gmaill.com\",\r\n    \"username\": \"duyennn\",\r\n    \"password\": \"duyen\"\r\n}",
+							"raw": "{\r\n    \"email\": \"tranthanhduyenk63@gmaill.com\",\r\n    \"username\": \"duyen\",\r\n    \"password\": \"duyen\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -132,6 +132,62 @@
 								"auth",
 								"admin",
 								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forget password user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"tranthanhduyenk63@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/user/forget-password",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"user",
+								"forget-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forget password admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/admin/forget-password",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"admin",
+								"forget-password"
 							]
 						}
 					},
@@ -214,6 +270,316 @@
 						}
 					},
 					"response": []
+				}
+			]
+		},
+		{
+			"name": "Device",
+			"item": [
+				{
+					"name": "create device",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"deviceId\": \"1\",\r\n    \"deviceName\": \"kiki\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/devices",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"devices"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete device",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/devices/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"devices",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get device",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/devices/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"devices",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all user's devices",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/devices",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"devices"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{userToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Feeding",
+			"item": [
+				{
+					"name": "feed pet",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/feeding/onClick/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"feeding",
+								"onClick",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change onClickFeed weight",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"weight\": 299\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/feeding/onClick/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"feeding",
+								"onClick",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add preset feeding",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"off\",\r\n    \"weight\": 100,\r\n    \"date\": \"17:10\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/feeding/preset/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"feeding",
+								"preset",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update preset feeding",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"on\",\r\n    \"weight\": 100,\r\n    \"date\": \"17:40\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/feeding/preset/1/61e5408ed3b2bad2cf4d5d80",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"feeding",
+								"preset",
+								"1",
+								"61e5408ed3b2bad2cf4d5d80"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete a preset",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/feeding/preset/1/61e5408ed3b2bad2cf4d5d80",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"feeding",
+								"preset",
+								"1",
+								"61e5408ed3b2bad2cf4d5d80"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{userToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		}

@@ -1,17 +1,17 @@
-const nodemailer = require("nodemailer");
+const nodemailer = require('nodemailer')
 
-const { emailConfig } = require('../../configs');
+const { emailConfig } = require('../../configs')
 
-const { host, port, user, pass } = emailConfig;
+const { host, port, user, pass } = emailConfig
 const transporter = nodemailer.createTransport({
   host,
   port,
-  secure: false, 
+  secure: false,
   auth: {
     user,
-    pass,
-  },
-});
+    pass
+  }
+})
 
 const sendEmail = async (to, subject, text, content) => {
   return await transporter.sendMail({
@@ -19,8 +19,8 @@ const sendEmail = async (to, subject, text, content) => {
     to,
     subject,
     text,
-    html: `<b>${content}</b>`,
-  });
-};
+    html: `<b>${content}</b>`
+  })
+}
 
 module.exports = sendEmail

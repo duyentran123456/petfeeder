@@ -27,7 +27,7 @@ const DeviceSchema = new mongoose.Schema({
     status: {
       type: String,
       enum: ['on', 'off'],
-      default: 'on'
+      default: 'off'
     },
     weight: {
       type: Number,

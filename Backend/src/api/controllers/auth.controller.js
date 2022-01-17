@@ -73,60 +73,60 @@ const loginAdmin = async (req, res, next) => {
 
 const forgetPasswordUser = async (req, res, next) => {
   const { email } = req.body
-  const user = await getUserDb({email})
-  if(!user) return res.status(404).json(apiResponse({status: APIStatus.FAIL, msg:'This account does not exist'}))
+  const user = await getUserDb({ email })
+  if (!user) return res.status(404).json(apiResponse({ status: APIStatus.FAIL, msg: 'This account does not exist' }))
 
   const verifyCode = nanoid()
   const verifyLink = `http://localhost:${port}/auth/user/verify-code?email=${email}&code=${verifyCode}`
   globalCache.set(`user:${email}`, verifyCode, '10h')
   await sendEmail(email, 'Forget password on Pet Feeder', 'Click this link to verify', verifyLink)
 
-  return res.status(200).json(apiResponse({status: APIStatus.SUCCESS, msg: 'Check your email to get the verify link'}))
+  return res.status(200).json(apiResponse({ status: APIStatus.SUCCESS, msg: 'Check your email to get the verify link' }))
 }
 
 const verifyCodeUser = async (req, res, next) => {
-  const {email, code} = req.query
+  const { email, code } = req.query
 
   const realCode = globalCache.get(`user:${email}`)
-  if(realCode !== code) return res.status(400).json(apiResponse({status: APIStatus.FAIL, msg: 'Invalid code'}))
+  if (realCode !== code) return res.status(400).json(apiResponse({ status: APIStatus.FAIL, msg: 'Invalid code' }))
 
   const newPassword = nanoid(8)
-  const [user, hashedPw] = await Promise.all([getUserDb({email}), hashPassword(newPassword)])
+  const [user, hashedPw] = await Promise.all([getUserDb({ email }), hashPassword(newPassword)])
 
   user.password = hashedPw
   await Promise.all([user.save(), sendEmail(email, 'New password on Pet Feeder', 'This is your new password', newPassword)])
   globalCache.del(`user:${email}`)
 
-  return res.status(200).json(apiResponse({status: APIStatus.SUCCESS, msg: 'Check your email to get your new password'}))
+  return res.status(200).json(apiResponse({ status: APIStatus.SUCCESS, msg: 'Check your email to get your new password' }))
 }
 
 const forgetPasswordAdmin = async (req, res, next) => {
   const { email } = req.body
-  const admin = await getAdminDb({email})
-  if(!admin) return res.status(404).json(apiResponse({status: APIStatus.FAIL, msg:'This account does not exist'}))
+  const admin = await getAdminDb({ email })
+  if (!admin) return res.status(404).json(apiResponse({ status: APIStatus.FAIL, msg: 'This account does not exist' }))
 
   const verifyCode = nanoid()
   const verifyLink = `http://localhost:${port}/auth/admin/verify-code?email=${email}&code=${verifyCode}`
   globalCache.set(`user:${email}`, verifyCode, '10h')
   await sendEmail(email, 'Forget password on Pet Feeder', 'Click this link to verify', verifyLink)
 
-  return res.status(200).json(apiResponse({status: APIStatus.SUCCESS, msg: 'Check your email to get the verify link'}))
+  return res.status(200).json(apiResponse({ status: APIStatus.SUCCESS, msg: 'Check your email to get the verify link' }))
 }
 
 const verifyCodeAdmin = async (req, res, next) => {
-  const {email, code} = req.query
+  const { email, code } = req.query
 
   const realCode = globalCache.get(`admin:${email}`)
-  if(realCode !== code) return res.status(400).json(apiResponse({status: APIStatus.FAIL, msg: 'Invalid code'}))
+  if (realCode !== code) return res.status(400).json(apiResponse({ status: APIStatus.FAIL, msg: 'Invalid code' }))
 
   const newPassword = nanoid(8)
-  const [admin, hashedPw] = await Promise.all([getAdminDb({email}), hashPassword(newPassword)])
+  const [admin, hashedPw] = await Promise.all([getAdminDb({ email }), hashPassword(newPassword)])
 
   admin.password = hashedPw
   await Promise.all([admin.save(), sendEmail(email, 'New password on Pet Feeder', 'This is your new password', newPassword)])
   globalCache.del(`admin:${email}`)
 
-  return res.status(200).json(apiResponse({status: APIStatus.SUCCESS, msg: 'Check your email to get your new password'}))
+  return res.status(200).json(apiResponse({ status: APIStatus.SUCCESS, msg: 'Check your email to get your new password' }))
 }
 
 module.exports = {
