@@ -1,6 +1,6 @@
 require('dotenv-safe').config()
 
-const port = process.env.POnRT
+const port = process.env.PORT
 const jwtKey = process.env.JWT_KEY
 const mongodbUri = process.env.MONGODB_URI
 const emailHost = process.env.EMAIL_HOST
