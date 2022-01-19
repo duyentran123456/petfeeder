@@ -26,7 +26,7 @@
               <div class="mb-5 text-center text-danger">{{ $data['msg'] }}</div>
               <div class="text-center">
                 <button type="submit" class="btn btn-primary fs-5 w-25 me-3 rounded">Đăng ký</button>
-                <a href="/login" class="text-decoration-none text-muted" >Đăng nhập</a>
+                <router-link to="/login" class="text-decoration-none text-muted">Đăng nhập</router-link>
               </div>
             </form>
          </div>

@@ -23,11 +23,11 @@
               </div>
             </form>
             
-            <div class="text-center p-space"><a href="/forgot-password" class="text-decoration-none text-muted mb-5">Quên mật khẩu ?</a></div>
+            <div class="text-center p-space"><router-link to="/forgot-password" class="text-decoration-none text-muted mb-5">Quên mật khẩu ?</router-link></div>
 
             <div class="text-center">
               <span class="me-2">Chưa có tài khoản ?</span> 
-              <a href="/register" class="text-decoration-none text-muted">Đăng ký</a>
+              <router-link to="/register" class="text-decoration-none text-muted">Đăng ký</router-link>
             </div>
          </div>
        </div>
