@@ -24,8 +24,8 @@
             </form>
 
             <div class="text-center"> 
-              <a href="/register" class="text-decoration-none me-5">Đăng ký</a>
-              <a href="/login" class="text-decoration-none">Đăng nhập</a>
+              <router-link to="/register" class="text-decoration-none me-5">Đăng ký</router-link>
+              <router-link to="/login" class="text-decoration-none">Đăng nhập</router-link>
             </div>
          </div>
        </div>
