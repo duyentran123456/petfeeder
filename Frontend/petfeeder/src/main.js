@@ -13,7 +13,12 @@ import VueAxios from 'vue-axios'
 import {BootstrapVue, IconsPlugin} from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+//toast
+// import VueToast from 'vue-toast-notification';
+// import 'vue-toast-notification/dist/theme-sugar.css';
 
+
+// Vue.use(VueToast)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(VueRouter)

@@ -11,11 +11,13 @@ const adminRouter = require('./src/api/routes/admin.route')
 const deviceRouter = require('./src/api/routes/device.route')
 const feedingRouter = require('./src/api/routes/feeding.route')
 const apiResponse = require('./src/api/utils/apiResponse')
-
+const cors = require('cors')
 require('./src/api/db/mongoose')
 
 const app = express()
 
+
+app.use(cors());
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(fileUpload({ parseNested: true }))
