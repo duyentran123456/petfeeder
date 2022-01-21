@@ -59,12 +59,15 @@
           <b-button size="sm" @click="row.toggleDetails">
             {{ row.detailsShowing ? 'Ẩn' : 'Hiện' }} chỉnh sửa
           </b-button>
+          <b-button size="sm" class="bg-danger" @click="deleteItems">
+            <i class="fas fa-trash"></i>
+          </b-button>
         </template>
         <template #row-details>
-          <form action="" class="bg-blue p-3">
+          <form class="bg-blue p-3" @submit="editFresetFeed">
             <div class="form-group mb-3">
               <label for="" class="form-lable">Khối lượng</label>
-              <input type="text" class="form-control">
+              <input type="text" class="form-control" v-model="edit.weight">
             </div>
             <div class="form-group mb-3">
               <label for="" class="form-lable me-3">Trạng thái</label>
@@ -75,7 +78,7 @@
               <vue-timepicker></vue-timepicker>
             </div>
             <div class="form-group mb-3">
-              <button class="btn btn-primary">Edit</button>
+              <button class="btn btn-success">>> Edit >></button>
             </div>
           </form>
         </template>
@@ -148,7 +151,15 @@ export default {
       options: [
         {value: 'on', text: 'on'},
         {value: 'off', text: 'off'}
-      ]
+      ],
+      edit:{
+        status: '',
+        weight: '',
+        date: {
+          HH: '00',
+          mm: '00'
+        }
+      }
     }
   },
   created(){
@@ -236,6 +247,9 @@ export default {
     resetInfoModal() {
       this.infoModal.title = ''
       this.infoModal.content = ''
+    },
+    toggleDetails(){
+      alert("hello");
     }
   }
 };
