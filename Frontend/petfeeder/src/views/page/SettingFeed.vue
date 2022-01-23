@@ -1,6 +1,7 @@
 <template>
-  <div class="setting-feed row fs-3 overflow-auto w-100">
-    <div class="col-7 px-5 pt-5">
+  <div class="fs-3 w-85 overflow-auto scroll">
+    <div class="setting-feed row pt-5">
+    <div class="col-6 px-5">
       <div class="calendar-feeder w-100">
         <div class="calender-feeder-item border card shadow mb-5">
           <div class="card-header flex justify-content-center"> 
@@ -40,53 +41,82 @@
         <span class="fw-bold">Thêm mới lịch trình</span>
       </div> -->
     </div>
-    <div class="col-5 p-5">
-      <div class="sticky-top w-75 feeder-container border rounded flex flex-column justify-content-center align-items-center shadow mt-3">
-        <h2 class="mb-3 mt-3">Cho ăn trực tiếp</h2>
-        <div class="d-flex flex-wrap w-75 mb-3">
+    <div class="col-3">
+      <div class="card border rounded flex flex-column justify-content-center align-items-center shadow">
+        <div class="card-header w-100 text-center">
+          <h3>Cho ăn trực tiếp</h3>
+        </div>
+        <div class="card-body d-flex flex-wrap mb-3">
           <p class="flex">Lượng thức ăn: (gam)</p>
           <form class="d-flex align-items-center w-100" @submit="onChangeClickWeight">        
             <input type="text" class="form-control me-3" v-model="onClickWeight.weight">
             <button type="submit" class="border-0 bg-light btn-change-onclick-weight fas fa-sync-alt"></button>     
           </form>
         </div>
-        <button class="btn btn-success btn-feeder mb-3" @click="onClickFeed">Cho ăn</button>
+        <div class="card-footer w-100 text-center">
+          <button class="btn btn-success btn-feeder" @click="onClickFeed">Cho ăn</button>
+        </div>
       </div>
     </div>
-    <div class="col-12 px-5">
-      <b-table hover :items="items" :fields="fields" class="shadow rounded border" v-show="items.length != 0" >
-        <template #cell(actions)="row">
-          <b-button size="sm" @click="row.toggleDetails">
-            {{ row.detailsShowing ? 'Ẩn' : 'Hiện' }} chỉnh sửa
-          </b-button>
-          <b-button size="sm" class="bg-danger" @click="deleteItems">
-            <i class="fas fa-trash"></i>
-          </b-button>
-        </template>
-        <template #row-details>
-          <form class="bg-blue p-3" @submit="editFresetFeed">
-            <div class="form-group mb-3">
-              <label for="" class="form-lable">Khối lượng</label>
-              <input type="text" class="form-control" v-model="edit.weight">
-            </div>
-            <div class="form-group mb-3">
-              <label for="" class="form-lable me-3">Trạng thái</label>
-              <b-form-select v-model="selected" :options="options" class="rounded"></b-form-select>
-            </div>
-            <div class="form-group mb-3">
-              <label for="" class="form-lable me-3">Thời gian</label>
-              <vue-timepicker></vue-timepicker>
-            </div>
-            <div class="form-group mb-3">
-              <button class="btn btn-success">>> Edit >></button>
-            </div>
-          </form>
-        </template>
-        <b-modal :id="modal.id" :title="modal.title" ok-only @hide="resetInfoModal" >
-          <pre>{{ modal.content }}</pre>
-        </b-modal>
-      </b-table>
+    <div class="col-3 px-5">
+      <div class="card shadow rounded">
+        <div class="card-header text-center fw-bold">
+          <h3>Cho ăn tự động</h3>
+        </div>
+        <div class="card-body text-center">
+          <label class="switch">
+            <input type="checkbox" v-model="autoFeeding" checked>
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
     </div>
+  </div>
+  <div class="px-4">
+    <table class="table shadow rounded-3 border" v-show="items.length != 0" >
+      <thead>
+        <tr>
+          <th>STT</th>
+          <th>Lượng thức ăn (game)</th>
+          <th>Thời gian (giờ:phút)</th>
+          <th>Trạng thái</th>
+          <th>Hành động</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(item, index) in items" v-bind:key="item._id">
+          <td>{{index + 1}}</td>
+          <td>{{ item.weight }}</td>
+          <td>{{ item.date }}</td>
+          <td>{{ item.status }}</td>
+          <td>
+            <b-button v-b-modal="item._id" @click="showModal(item)" class="btn btn-success me-3">Chỉnh sửa</b-button>
+            <button @click="deleteItem(item._id)" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+          </td>
+          <!-- The modal -->
+          <b-modal :id="item._id" hide-footer title="Chỉnh sửa">
+            <div class="fs-3">
+              <div class="form-group mb-3">
+                <label for="" class="form-lable">Lượng thức ăn</label>
+                <input type="text" class="form-control" v-model="edit.weight">
+              </div>
+              <div class="form-group mb-3">
+                <label for="" class="form-lable me-3">Thời gian</label>
+                <vue-timepicker v-model="edit.date"></vue-timepicker>
+              </div>
+              <div class="form-group mb-3">
+                <label for="" class="form-lable me-3">Trạng thái</label>
+                <b-form-select v-model="edit.status" :options="edit.options" class="border border-secondary"></b-form-select>
+              </div>
+              <div class="form-group mb-3 d-flex justify-content-end">
+                <button class="btn btn-success fs-3" @click="saveEditForm(item._id)">Save</button>
+              </div>
+            </div>
+          </b-modal>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   </div>
 </template>
 
@@ -95,8 +125,10 @@ import axios from 'axios';
 import VueTimepicker from "vue2-timepicker";
 import "vue2-timepicker/dist/VueTimepicker.css";
 import AppVue from '../../App.vue';
+import { mapMutations } from "vuex";
+import { mapState } from "vuex";
 
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUzZDY4MTAyNTYxMjUzMGRhMDFlNDUiLCJpYXQiOjE2NDI2ODc3NjAsImV4cCI6MTY0MjcyMzc2MH0.AXKj6uUUrySjKkjrqhUVfQ6p1yyfgih7HLSlhsVPkzA";
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUzZDY4MTAyNTYxMjUzMGRhMDFlNDUiLCJpYXQiOjE2NDI5NDQzMjUsImV4cCI6MTY0Mjk4MDMyNX0.6PLAADrrQ61cyOb1DjK7UPA6kZXRkm9GIJlKMdRfNXU";
 
 const headers = {
         "Content-Type": "application/json",
@@ -158,8 +190,13 @@ export default {
         date: {
           HH: '00',
           mm: '00'
-        }
-      }
+        },
+        options:[
+          {value: 'on', text: 'on'},
+          {value: 'off', text: 'off'}
+        ]
+      },
+      autoFeeding: true
     }
   },
   created(){
@@ -181,17 +218,25 @@ export default {
       });
   },
   methods: {
+    ...mapState(["deviceCurrent"]),
+    ...mapMutations(["addToast","showLoading", "hideLoading"]),
     onChangeClickWeight(e){
       e.preventDefault(); 
       axios.put('http://127.0.0.1:8000/api/feeding/onClick/1', this.onClickWeight, {headers})
       .then((res) => {
         //perform success action
-        alert(res.data.msg);
+        this.addToast({
+              message: "Đã đổi lượng thức ăn !",
+              type: "success",
+            });
       })
       .catch((error) => {
         //error.response.status check status code
         //error network
-        console.log(error);
+        this.addToast({
+              message: "Đổi lượng thức ăn thất bại!",
+              type: "error",
+            });
       })
       .finally(() => {
         //perform action in always
@@ -204,12 +249,18 @@ export default {
       axios.post(url, data, {headers})
       .then((res) => {
         //perform success action
-        alert(res.data.msg);
+        this.addToast({
+              message: "Thú cưng của bạn đã được cho ăn!",
+              type: "success",
+            });
       })
       .catch((error) => {
         //error.response.status check status code
         //error network
-        console.log(error);
+        this.addToast({
+              message: "Lỗi cho quá trình cho ăn!",
+              type: "error",
+            });
       })
       .finally(() => {
         //perform action in always
@@ -228,11 +279,18 @@ export default {
       .then((res) => {
         //perform success action
         this.items = res.data.data.presetFeed;
+        this.addToast({
+              message: "Thêm mới thành công lịch trình!",
+              type: "success",
+            });
       })
       .catch((error) => {
         //error.response.status check status code
         //error network
-        console.log(error);
+        this.addToast({
+              message: "Thêm mới thất bại!",
+              type: "error",
+            });
       })
       .finally(() => {
         //perform action in always
@@ -250,12 +308,77 @@ export default {
     },
     toggleDetails(){
       alert("hello");
+    },
+    showModal(item){
+      this.edit.status = item.status;
+      this.edit.weight = item.weight;
+      this.edit.date.HH = item.date.substring(0,2);
+      this.edit.date.mm = item.date.substring(3);
+    },
+    saveEditForm(id){
+      const url = 'http://127.0.0.1:8000/api/feeding/preset/1/' + id;
+      console.log(url);
+      const data = {
+        status: this.edit.status,
+        weight: this.edit.weight,
+        date: `${this.edit.date.HH}:${this.edit.date.mm}`
+      };
+      console.log(data);
+      axios.put(url, data, {headers})
+      .then((res) => {
+        //perform success action
+        this.items = res.data.data.presetFeed;
+        this.addToast({
+              message: "Chỉnh sửa thành công lịch trình!",
+              type: "success",
+            });
+      })
+      .catch((error) => {
+        //error.response.status check status code
+        //error network
+        console.log(error);
+        this.addToast({
+              message: "Chỉnh sửa thất bại!",
+              type: "error",
+            });
+      })
+      .finally(() => {
+        //perform action in always
+        this.$
+      });
+    },
+    deleteItem(id){
+      const url = "http://127.0.0.1:8000/api/feeding/preset/1/" + id;
+      axios.delete(url, {headers})
+      .then((res) => {
+        //perform success action
+        this.items = res.data.data.presetFeed;
+        this.addToast({
+              message: "Xóa thành công!",
+              type: "success",
+            });
+      })
+      .catch((error) => {
+        //error.response.status check status code
+        //error network
+        this.addToast({
+              message: "Xóa thất bại!",
+              type: "error",
+            });
+      })
+      .finally(() => {
+        //perform action in always
+      });
     }
+    
   }
 };
 </script>
 
 <style>
+.w-85{
+  width: 85%;
+}
 .btn-change-onclick-weight:hover{
   color: rgb(106, 221, 52);
 }
@@ -308,7 +431,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: rgb(204, 192, 192);
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -320,17 +443,17 @@ export default {
   width: 26px;
   left: 4px;
   bottom: 4px;
-  background-color: white;
+  background-color: rgb(255, 255, 255);
   -webkit-transition: .4s;
   transition: .4s;
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: #179e2d;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px #245883;
 }
 
 input:checked + .slider:before {
