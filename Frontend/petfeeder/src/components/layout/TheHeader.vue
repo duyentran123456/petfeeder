@@ -6,18 +6,18 @@
     </div>
     <div class="header-center flex">
       <multiselect
-        v-model="valueDevice"
-        :options="optionsDevice"
+        v-model="deviceComboCurrent" 
+        :options="devices"
         :custom-label="displayDevice"
         :allow-empty="false"
         placeholder="Chọn thiết bị"
         deselect-label=""
         label="deviceName"
-        track-by="deviceID"
+        track-by="deviceId"
       ></multiselect>
       <base-button
       class="btn-add-device"
-        classButton="btn-primary"
+        classButton="btn-custom-primary"
         textButton="Thêm thiết bị"
         @clickButton="addDevice"
       >
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapState, mapMutations } from "vuex";
 import Multiselect from "vue-multiselect";
 import BaseButton from "../base/BaseButton.vue";
 
@@ -52,14 +52,17 @@ export default {
   },
   data() {
     return {
-      valueDevice: { deviceID: 1, deviceName: "Thiết bị 1" },
-      optionsDevice: [
-        { deviceID: 2, deviceName: "Thiết bị 1" },
-        { deviceID: 3, deviceName: "Thiết bị 2" },
-        { deviceID: 4, deviceName: "Thiết bị 3" },
-        { deviceID: 5, deviceName: "Thiết bị 4" },
-      ],
+      deviceComboCurrent: null,
     };
+  },
+  computed: {
+    ...mapState(['deviceCurrent', 'devices']),
+  },
+  watch: {
+    //Cập nhật lại thiết bị hiện tại
+    deviceComboCurrent: function() {
+      this.setDeviceCurrent(this.deviceComboCurrent)
+    }
   },
   mounted() {
     //Xử lý hiển thị text không có kết quả khi tìm kiếm trong combobox
@@ -76,13 +79,13 @@ export default {
     
   },
   methods: {
-    ...mapMutations(['formAddDevice', 'formProfile', 'formChangePassword']),
+    ...mapMutations(['formAddDevice', 'formProfile', 'formChangePassword', 'setDeviceCurrent']),
 
     /**
      * Cấu hình hiển thị combobox
      */
-    displayDevice({ deviceName }) {
-      return `${deviceName}`;
+    displayDevice({ deviceId, deviceName }) {
+      return `${deviceName} - ${deviceId}`;
     },
 
     /**

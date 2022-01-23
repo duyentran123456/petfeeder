@@ -13,47 +13,15 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>device123</td>
-            <td>Máy cho ăn 1</td>
-            <td><div class="border border-success status-icon rounded bg-success text-white fw-bold">On</div></td>
-            <td><i class="far fa-trash-alt btn-delete"></i></td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>device123</td>
-            <td>Máy cho ăn 1</td>
-            <td><div class="border border-success status-icon rounded bg-success text-white fw-bold">On</div></td>
-            <td><i class="far fa-trash-alt btn-delete"></i></td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>device123</td>
-            <td>Máy cho ăn 1</td>
-            <td><div class="border border-success status-icon rounded bg-success text-white fw-bold">On</div></td>
-            <td><i class="far fa-trash-alt btn-delete"></i></td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>device123</td>
-            <td>Máy cho ăn 1</td>
-            <td><div class="border border-success status-icon rounded bg-success text-white fw-bold">On</div></td>
-            <td><i class="far fa-trash-alt btn-delete"></i></td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>device123</td>
-            <td>Máy cho ăn 1</td>
-            <td><div class="border border-success status-icon rounded bg-success text-white fw-bold">On</div></td>
-            <td><i class="far fa-trash-alt btn-delete"></i></td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>device123</td>
-            <td>Máy cho ăn 1</td>
-            <td><div class="border border-success status-icon rounded bg-danger text-white fw-bold">Off</div></td>
-            <td><i class="far fa-trash-alt btn-delete"></i></td>
+          <tr v-for="(device, index) in devices"
+          :key="device.deviceId">
+            <th scope="row">{{ index+1 }}</th>
+            <td>{{ device.deviceId }}</td>
+            <td>{{ device.deviceName }}</td>
+            <td><div class="border border-success status-icon rounded text-white fw-bold"
+              :class="[device.petDetectedFeedWeight.status=='on'?'bg-success':'bg-danger']"
+            >{{ device.petDetectedFeedWeight.status }}</div></td>
+            <td><i @click="removeDevice(device.deviceId)" class="far fa-trash-alt btn-delete"></i></td>
           </tr>
         </tbody>
       </table>
@@ -62,11 +30,28 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "ListDevice",
   components: {},
+  data() {
+    return {
+      listDivices: [],
+    }
+  },
   props: {
 
+  },
+  created() {
+
+  },
+  computed: {
+    ...mapState(['devices']),
+  },
+  methods: {
+    removeDevice(deviceId) {
+      debugger
+    }
   },
 };
 </script>

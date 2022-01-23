@@ -1,6 +1,6 @@
 <template>
   <button
-    class="btn"
+    class="btn-custom"
     :class="classButton"
     @click="$emit('clickButton')"
     @keyup.enter="$emit('enterButton')"
@@ -24,7 +24,7 @@ export default {
 };
 </script>
         <style>
-.btn {
+.btn-custom {
   display: flex;
   justify-content: center;
   height: 32px;
@@ -39,22 +39,22 @@ export default {
   cursor: pointer;
 }
 
-.btn-primary {
+.btn-custom-primary {
   background-color: var(--background-button-primary);
   color: var(--white-color);
 }
 
-.btn-primary:hover {
+.btn-custom-primary:hover {
   background-color: var(--background-button-primary-hover);
 }
 
-.btn-secondary {
+.btn-custom-secondary {
   background-color: var(--white-color);
   color: #3d3f4e;
   border: 1px solid #cecece;
 }
 
-.btn-secondary:hover {
+.btn-custom-secondary:hover {
   background-color: #f8f8f8;
 }
 </style>

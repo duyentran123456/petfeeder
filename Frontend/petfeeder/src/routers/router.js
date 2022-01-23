@@ -12,6 +12,8 @@ import ListDevice from "../views/page/ListDevice.vue";
 import ManageUser from "../views/page/ManageUser.vue";
 import SettingFeed from "../views/page/SettingFeed.vue";
 
+import store from "../stores/store.js";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -23,7 +25,11 @@ const routes = [
   },
   { path: "/login", name: "Login", component: Login },
   { path: "/register", name: "Register", component: Register },
-  { path: "/forgot-password", name: "ForgotPassword", component: ForgotPassword},
+  {
+    path: "/forgot-password",
+    name: "ForgotPassword",
+    component: ForgotPassword,
+  },
   {
     path: "/app",
     redirect: "/app/dashboard",
@@ -64,6 +70,18 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.path != "/login") {
+    if(window.localStorage.getItem('token')) {
+      next();
+    } else {
+      next("/login");
+    }
+  } else {
+    next();
+  }
 });
 
 export default router;

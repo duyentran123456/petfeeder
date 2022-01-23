@@ -12,14 +12,14 @@
            <form action="" class="d-flex flex-column px-3 mb-5">
               <div class="form-group mb-3">
                 <label for="" class="form-label" >Tên đăng nhập</label>
-                <input type="text" class="form-control fs-3">
+                <input v-model="inforLogin.username" type="text" class="form-control fs-3">
               </div>
               <div class="form-group mb-4">
                 <label for="" class="form-label" >Mật khẩu</label>
-                <input type="password" class="form-control fs-3" >
+                <input v-model="inforLogin.password" type="password" class="form-control fs-3" >
               </div>
               <div class="text-center">
-                <button class="btn btn-primary fs-4 w-50" >Đăng nhập</button>
+                <button @click="login" class="btn btn-primary fs-4 w-50" >Đăng nhập</button>
               </div>
             </form>
             
@@ -36,12 +36,56 @@
 </template>
 
 <script>
+import axios from 'axios'
+import {mapMutations} from 'vuex'
+
 export default {
   name: "Login",
   components: {},
   props: {
 
   },
+  data() {
+    return {
+      inforLogin: {
+        username: '',
+        password: '',
+      }
+    }
+  },
+  methods: {
+    ...mapMutations(['setToken', 'addToast']),
+    login(e) {
+      e.preventDefault();
+      axios.post('http://localhost:8000/auth/user/login', this.inforLogin)
+      .then((res) => {
+        if(res.status == 200) {
+          this.setToken(res.data.data.token);
+          window.localStorage.setItem('token', res.data.data.token);
+          this.$router.push('/app/dashboard');
+          this.addToast({
+            message: 'Đăng nhập thành công',
+            type: 'success',
+          });
+        }
+        else {
+          this.setToken(null);
+          window.localStorage.setItem('token', null);
+          this.addToast({
+            message: 'Đăng nhập thất bại',
+            type: 'error',
+          });
+        }
+      })
+      .catch((error)=> {
+        console.log(error);
+        this.addToast({
+            message: 'Đăng nhập thất bại',
+            type: 'warning',
+          });
+      })
+    }
+  }
 };
 </script>
 

@@ -5,7 +5,7 @@
       dragHandle=".drag-handle"
       :isResizable="false"
       :w="420"
-      :h="320"
+      :h="heightPopup"
       :x="586"
       :y="180"
     >
@@ -18,30 +18,42 @@
           </div>
           <div class="add-device-body">
             <div class="add-device-body-control control">
-              <div class="label">Tên thiết bị</div>
-              <input class="input" maxlength="100" placeholder="Tên thiết bị bạn muốn hiển thị"/>
+              <div class="label">
+                Tên thiết bị <span style="color: red">*</span>
+              </div>
+              <input
+                v-model="deviceInfor.deviceName"
+                class="input"
+                maxlength="100"
+                placeholder="Tên thiết bị bạn muốn hiển thị"
+              />
+              <div v-if="!validate.deviceName" class="validate-device">
+                Tên thiết bị không được để trống
+              </div>
             </div>
             <div class="add-device-body-control control">
               <div class="label">
                 Mã thiết bị <span style="color: red">*</span>
               </div>
-              <input class="input" maxlength="100" placeholder="Nhập mã thết bị" />
-            </div>
-            <div class="add-device-body-control control">
-              <div class="label">
-                Mật khẩu thiết bị <span style="color: red">*</span>
+              <input
+                v-model="deviceInfor.deviceId"
+                class="input"
+                maxlength="100"
+                placeholder="Nhập mã thết bị"
+              />
+              <div v-if="!validate.deviceId" class="validate-device">
+                Mã thiết bị không được để trống
               </div>
-              <input class="input" maxlength="100" type="password" placeholder="Nhập mật khẩu thết bị"/>
             </div>
           </div>
           <div class="add-device-footer flex">
             <base-button
-              classButton="btn-secondary"
+              classButton="btn-custom-secondary"
               textButton="Hủy"
               @clickButton="hideForm"
             ></base-button>
             <base-button
-              classButton="btn-primary"
+              classButton="btn-custom-primary"
               textButton="Thêm"
               @clickButton="addDevice"
             ></base-button>
@@ -56,10 +68,24 @@
 import { mapMutations } from "vuex";
 import VueDragResize from "vue-drag-resize";
 import BaseButton from "../../components/base/BaseButton.vue";
+import axios from "axios";
+
 export default {
   name: "AddDevice",
   data() {
-    return {};
+    return {
+      deviceInfor: {
+        deviceName: "",
+        deviceId: "",
+      },
+      //validate nhập vào
+      validate: {
+        deviceName: true,
+        deviceId: true,
+      },
+      //Chiều cao popup
+      heightPopup: 260,
+    };
   },
   components: {
     VueDragResize,
@@ -69,7 +95,7 @@ export default {
   watch: {},
 
   methods: {
-    ...mapMutations(["formAddDevice"]),
+    ...mapMutations(["formAddDevice", "addToast", "showLoading", "hideLoading"]),
 
     /**
      * Đóng form thêm mới
@@ -78,11 +104,76 @@ export default {
       this.formAddDevice(false);
     },
 
+    validateDevice() {
+      let validate = true;
+      if (this.deviceInfor.deviceName == "") {
+        this.validate.deviceName = false;
+        validate = false;
+      } else {
+        this.validate.deviceName = true;
+      }
+      if (this.deviceInfor.deviceId == "") {
+        this.validate.deviceId = false;
+        validate = false;
+      } else {
+        this.validate.deviceId = true;
+      }
+      validate ? (this.heightPopup = 260) : (this.heightPopup = 300);
+      return validate;
+    },
+
     /**
      * Thêm thiết bị
      */
     addDevice() {
-      return;
+      if (this.validateDevice()) {
+        this.showLoading();
+        axios
+          .post(
+            "localhost:8000/api/devices",
+            {
+              deviceId: this.deviceInfor.deviceId,
+              deviceName: this.deviceInfor.deviceName,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+              },
+            }
+          )
+          .then((response) => {
+            if (response.status == 200) {
+              //Đóng form
+              this.formAddDevice(false);
+              //Thông báo
+              this.addToast({
+                message: "Thêm thiết bị thành công",
+                type: "success",
+              });
+              //Gọi lại api lấy thiết bị tại đây
+
+            } else {
+              //Thông báo
+              this.addToast({
+                message: "Thông báo lấy từ response",
+                type: "error",
+              });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            //Thông báo
+            this.addToast({
+              message: "Thêm thiết bị thất bại",
+              type: "error",
+            });
+            //Đóng form
+            this.formAddDevice(false);
+          })
+          .finally(() =>{
+            this.hideLoading();
+          })
+      }
     },
   },
 };
@@ -154,7 +245,13 @@ export default {
   margin: 16px 0 22px 0;
 }
 
-.add-device-footer .btn {
+.add-device-footer .btn-custom {
   width: 92px;
+}
+
+.validate-device {
+  font-size: 1.3rem;
+  color: red;
+  padding: 2px 0 0 6px;
 }
 </style>

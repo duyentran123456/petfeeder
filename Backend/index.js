@@ -15,9 +15,7 @@ const cors = require('cors')
 require('./src/api/db/mongoose')
 
 const app = express()
-
-
-app.use(cors());
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(fileUpload({ parseNested: true }))
@@ -37,7 +35,7 @@ app.use((err, req, res, next) => {
         apiResponse({
           status: APIStatus.FAIL,
           msg: 'validation failed',
-          data: { details: err.details },
+          data: { details: err.details }
         })
       )
   }

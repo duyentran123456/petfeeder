@@ -136,12 +136,12 @@
           </div>
           <div class="profile-footer flex">
             <base-button
-              classButton="btn-secondary"
+              classButton="btn-custom-secondary"
               textButton="Đóng"
               @clickButton="hideForm"
             ></base-button>
             <base-button
-              classButton="btn-primary"
+              classButton="btn-custom-primary"
               textButton="Lưu"
               @clickButton="saveProfile"
             ></base-button>
@@ -394,7 +394,7 @@ export default {
   margin: 16px 0 22px 0;
 }
 
-.profile-footer .btn {
+.profile-footer .btn-custom {
   width: 92px;
 }
 </style>

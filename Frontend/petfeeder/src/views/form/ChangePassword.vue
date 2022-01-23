@@ -38,12 +38,12 @@
           </div>
           <div class="change-pasword-footer flex">
             <base-button
-              classButton="btn-secondary"
+              classButton="btn-custom-secondary"
               textButton="Hủy"
               @clickButton="hideForm"
             ></base-button>
             <base-button
-              classButton="btn-primary"
+              classButton="btn-custom-primary"
               textButton="Đổi"
               @clickButton="changePassword"
             ></base-button>
@@ -156,7 +156,7 @@ export default {
   margin: 16px 0 22px 0;
 }
 
-.change-pasword-footer .btn {
+.change-pasword-footer .btn-custom {
   width: 92px;
 }
 </style>
