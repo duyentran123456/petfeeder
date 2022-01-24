@@ -2,16 +2,17 @@ const express = require('express')
 const { ValidationError } = require('express-validation')
 const fileUpload = require('express-fileupload')
 const path = require('path')
+const cors = require('cors')
 
 const APIStatus = require('./src/api/constants/APIStatus')
 const { port } = require('./src/configs')
 const authRouter = require('./src/api/routes/auth.route')
 const userRouter = require('./src/api/routes/user.route')
-const adminRouter = require('./src/api/routes/admin.route')
 const deviceRouter = require('./src/api/routes/device.route')
 const feedingRouter = require('./src/api/routes/feeding.route')
+const historyRouter = require('./src/api/routes/history.route')
 const apiResponse = require('./src/api/utils/apiResponse')
-const cors = require('cors')
+
 require('./src/api/db/mongoose')
 
 const app = express()
@@ -23,9 +24,9 @@ app.use(express.static(path.join(__dirname, './src/api/static')))
 
 app.use('/auth', authRouter)
 app.use('/api/users', userRouter)
-app.use('/api/admins', adminRouter)
 app.use('/api/devices', deviceRouter)
 app.use('/api/feeding', feedingRouter)
+app.use('/api/history', historyRouter)
 
 app.use((err, req, res, next) => {
   if (err instanceof ValidationError) {

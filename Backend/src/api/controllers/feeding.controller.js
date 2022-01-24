@@ -1,5 +1,7 @@
 const APIStatus = require('../constants/APIStatus')
-const { changeOnClickWeightDb, createPresetFeedDb, updatePresetFeedDb, deletePresetFeedDb } = require('../db/feeding.db')
+const { changeOnClickWeightDb, createPresetFeedDb, updatePresetFeedDb, deletePresetFeedDb, updatePetDetectedFeedDb } = require('../db/feeding.db')
+const { createHistoryDb } = require('../db/history.db')
+const { getDeviceByDeviceIdDb } = require('../db/device.db')
 const apiResponse = require('../utils/apiResponse')
 
 const feedOnClick = async (req, res, next) => {
@@ -7,9 +9,11 @@ const feedOnClick = async (req, res, next) => {
   const { deviceId } = req.params
 
   if (!user.devices.includes(deviceId)) return res.status(400).json(apiResponse({ status: APIStatus.FAIL, msg: 'You dont have this device' }))
-
+  const device = await getDeviceByDeviceIdDb({ deviceId })
   // send msg to mqtt
   // [todo]
+
+  await createHistoryDb({ deviceId, weight: device.onClickFeedWeight, time: new Date() })
 
   return res.status(200).json(apiResponse({ status: APIStatus.SUCCESS, msg: 'Your pet is feeded' }))
 }
@@ -71,10 +75,22 @@ const deletePresetFeed = async (req, res, next) => {
   return res.status(200).json(apiResponse({ status: APIStatus.SUCCESS, data: rs }))
 }
 
+const updatePetDetectedFeed = async (req, res, next) => {
+  const user = req.user
+  const { deviceId } = req.params
+  const { status, weight } = req.body
+
+  if (!user.devices.includes(deviceId)) return res.status(400).json(apiResponse({ status: APIStatus.FAIL, msg: 'You dont have this device' }))
+
+  const rs = await updatePetDetectedFeedDb({ deviceId, status, weight })
+  return res.status(200).json(apiResponse({ status: APIStatus.SUCCESS, msg: 'update pet detected successfully', data: rs }))
+}
+
 module.exports = {
   feedOnClick,
   changeOnClickWeight,
   createPresetFeed,
   updatePresetFeed,
-  deletePresetFeed
+  deletePresetFeed,
+  updatePetDetectedFeed
 }

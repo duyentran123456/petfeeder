@@ -46,9 +46,21 @@ const deletePresetFeedDb = async (query) => {
   return rs
 }
 
+const updatePetDetectedFeedDb = async (query) => {
+  const { deviceId, status, weight } = query
+  const device = await Device.findOne({ deviceId })
+
+  device.petDetectedFeedWeight.status = status
+  device.petDetectedFeedWeight.weight = weight
+
+  const rs = await device.save()
+  return rs
+}
+
 module.exports = {
   changeOnClickWeightDb,
   createPresetFeedDb,
   updatePresetFeedDb,
-  deletePresetFeedDb
+  deletePresetFeedDb,
+  updatePetDetectedFeedDb
 }
