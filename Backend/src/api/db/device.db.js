@@ -1,6 +1,15 @@
 const Device = require('../models/device.model')
 const User = require('../models/user.model')
 
+const getAllDevicesDb = async (query) => {
+  const devices = await Device.find()
+
+  return {
+    devices,
+    totalDevices: devices.length
+  }
+}
+
 const getAllUserDevicesDb = async (query) => {
   const { userId } = query
   const user = await User.findById(userId)
@@ -45,6 +54,7 @@ const deleteDeviceDb = async (query) => {
 }
 
 module.exports = {
+  getAllDevicesDb,
   getAllUserDevicesDb,
   getDeviceByDeviceIdDb,
   createDeviceDb,

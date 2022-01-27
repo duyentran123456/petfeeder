@@ -1,13 +1,9 @@
 const User = require('../models/user.model')
 
 const getAllUserDb = async (query) => {
-  const { page, records, filter } = query
-
   const [totalUsers, users] = await Promise.all([
-    User.find(filter).count(),
-    User.find(filter)
-      .skip((page - 1) * records)
-      .limit(records)
+    User.find(query).count(),
+    User.find(query)
   ])
 
   return {

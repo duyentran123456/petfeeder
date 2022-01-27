@@ -30,7 +30,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"duyen\",\r\n    \"password\": \"duyen\"\r\n}",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"admin\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -73,7 +73,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"tranthanhduyen@gmaill.com\",\r\n    \"username\": \"duyen\",\r\n    \"password\": \"duyen\"\r\n}",
+							"raw": "{\r\n    \"email\": \"tranthanhduyenn@gmaill.com\",\r\n    \"username\": \"duyenn\",\r\n    \"password\": \"duyen\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -165,7 +165,62 @@
 		},
 		{
 			"name": "Admin",
-			"item": []
+			"item": [
+				{
+					"name": "create admin (use once)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"email\": \"admin@gmail.com\",\r\n    \"password\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/dashboard/test/createAdmin",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"dashboard",
+								"test",
+								"createAdmin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get statistic",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/dashboard/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"dashboard",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Device",

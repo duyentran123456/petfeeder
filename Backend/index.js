@@ -11,6 +11,7 @@ const userRouter = require('./src/api/routes/user.route')
 const deviceRouter = require('./src/api/routes/device.route')
 const feedingRouter = require('./src/api/routes/feeding.route')
 const historyRouter = require('./src/api/routes/history.route')
+const adminRouter = require('./src/api/routes/admin.route')
 const apiResponse = require('./src/api/utils/apiResponse')
 
 require('./src/api/db/mongoose')
@@ -27,6 +28,7 @@ app.use('/api/users', userRouter)
 app.use('/api/devices', deviceRouter)
 app.use('/api/feeding', feedingRouter)
 app.use('/api/history', historyRouter)
+app.use('/api/dashboard', adminRouter)
 
 app.use((err, req, res, next) => {
   if (err instanceof ValidationError) {
