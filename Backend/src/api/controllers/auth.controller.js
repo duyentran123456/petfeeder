@@ -24,7 +24,7 @@ const login = async (req, res, next) => {
   bcrypt.compare(password, user.password, (err, result) => {
     if (result) {
       const token = genToken(user._id)
-      return res.status(200).json(apiResponse({ status: APIStatus.SUCCESS, data: { token } }))
+      return res.status(200).json(apiResponse({ status: APIStatus.SUCCESS, data: { token, role: user.role } }))
     }
     if (err) {
       return res.status(500).json(apiResponse({ status: APIStatus.ERROR, msg: 'Internal Server Error' }))
@@ -43,7 +43,7 @@ const signup = async (req, res, next) => {
   if (!user) return res.status(400).json(apiResponse({ status: APIStatus.ERROR, msg: 'can not create new user' }))
 
   const token = genToken(user._id)
-  return res.status(200).json(apiResponse({ status: APIStatus.SUCCESS, data: { token } }))
+  return res.status(200).json(apiResponse({ status: APIStatus.SUCCESS, data: { token, role: user.role } }))
 }
 
 const forgetPasswordUser = async (req, res, next) => {
