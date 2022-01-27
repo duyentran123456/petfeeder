@@ -1,11 +1,23 @@
 const bcrypt = require('bcryptjs/dist/bcrypt')
 const APIStatus = require('../constants/APIStatus')
-const { updateUserPwDb } = require('../db/user.db')
+const { updateUserPwDb, updateUserDb } = require('../db/user.db')
 const hashPassword = require('../utils/hashPassword')
 const apiResponse = require('../utils/apiResponse')
 
 const updateInfo = async (req, res, next) => {
+  const user = req.user
+  const { gender, fullName, address } = req.body
 
+  const userr = updateUserDb({userId: user._id, newInfo})
+
+  return res.status(200).json(apiResponse({status: APIStatus.SUCCESS, msg: 'update user successfully'}))
+}
+
+const getInfo = async (req, res, next) => {
+  const user = req.user
+  const { password, _id, ...info } = user._doc
+
+  return res.status(200).json(apiResponse({status: APIStatus.SUCCESS, data: { info }}))
 }
 
 const changePassword = async (req, res, next) => {
@@ -28,5 +40,6 @@ const changePassword = async (req, res, next) => {
 
 module.exports = {
   updateInfo,
+  getInfo,
   changePassword
 }

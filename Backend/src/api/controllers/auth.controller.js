@@ -24,7 +24,8 @@ const login = async (req, res, next) => {
   bcrypt.compare(password, user.password, (err, result) => {
     if (result) {
       const token = genToken(user._id)
-      return res.status(200).json(apiResponse({ status: APIStatus.SUCCESS, data: { token, role: user.role } }))
+      const { password, _id, ...info } = user._doc
+      return res.status(200).json(apiResponse({ status: APIStatus.SUCCESS, data: { token, role: user.role, info } }))
     }
     if (err) {
       return res.status(500).json(apiResponse({ status: APIStatus.ERROR, msg: 'Internal Server Error' }))

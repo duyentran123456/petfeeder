@@ -29,7 +29,7 @@ const createDevice = async (req, res, next) => {
   const user = req.user
 
   if (!deviceIdsList.includes(deviceId)) return res.status(404).json(apiResponse({ status: APIStatus.FAIL, msg: 'Wrong device ID' }))
-  if (user.devices.includes(deviceId)) return res.status(400).json(apiResponse({ status: APIStatus.FAIL, msg: 'You already has this device' }))
+  if (user.devices.includes(deviceId)) return res.status(200).json(apiResponse({ status: APIStatus.FAIL, msg: 'Bạn đã có thiết bị này' }))
 
   const device = await createDeviceDb({ deviceId, deviceName, userId: user._id })
   return res.status(201).json(apiResponse({ status: APIStatus.SUCCESS, data: device }))
