@@ -18,8 +18,8 @@
               </tr>
               <tr>
                 <th>Lượng thức ăn:</th>
-                <td class="px-3 flex">
-                  <input type="text" class="form-control me-3" v-model="form.weight">
+                <td class="ps-3 flex">
+                  <input type="text" class="form-control me-3 fs-3" v-model="form.weight">
                   <span>(gam)</span>
                   </td>
               </tr>
@@ -49,7 +49,7 @@
         <div class="card-body d-flex flex-wrap mb-3">
           <p class="flex">Lượng thức ăn: (gam)</p>
           <form class="d-flex align-items-center w-100" @submit="onChangeClickWeight">        
-            <input type="text" class="form-control me-3" v-model="onClickWeight.weight">
+            <input type="text" class="form-control me-3 fs-3" v-model="onClickWeight.weight">
             <button type="submit" class="border-0 bg-light btn-change-onclick-weight fas fa-sync-alt"></button>     
           </form>
         </div>
@@ -98,7 +98,7 @@
             <div class="fs-3">
               <div class="form-group mb-3">
                 <label for="" class="form-lable">Lượng thức ăn</label>
-                <input type="text" class="form-control" v-model="edit.weight">
+                <input type="text" class="form-control fs-3" v-model="edit.weight">
               </div>
               <div class="form-group mb-3">
                 <label for="" class="form-lable me-3">Thời gian</label>
@@ -128,7 +128,7 @@ import AppVue from '../../App.vue';
 import { mapMutations } from "vuex";
 import { mapState } from "vuex";
 
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWUzZDY4MTAyNTYxMjUzMGRhMDFlNDUiLCJpYXQiOjE2NDI5NDQzMjUsImV4cCI6MTY0Mjk4MDMyNX0.6PLAADrrQ61cyOb1DjK7UPA6kZXRkm9GIJlKMdRfNXU";
+const token = window.localStorage.getItem('token'); 
 
 const headers = {
         "Content-Type": "application/json",
@@ -245,6 +245,7 @@ export default {
 
     onClickFeed(){
       const url = 'http://127.0.0.1:8000/api/feeding/onClick/1';
+      console.log(url);
       const data = {};
       axios.post(url, data, {headers})
       .then((res) => {
@@ -283,6 +284,9 @@ export default {
               message: "Thêm mới thành công lịch trình!",
               type: "success",
             });
+        this.form.date.HH = '00';
+        this.form.date.mm = '00';
+        this.form.weight = 0
       })
       .catch((error) => {
         //error.response.status check status code
