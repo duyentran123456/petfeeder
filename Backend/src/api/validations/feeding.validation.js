@@ -42,9 +42,20 @@ const deletePresetFeedValidation = {
   })
 }
 
+const updatePetDetectedFeedValidation = {
+  params: Joi.object({
+    deviceId: Joi.string().required()
+  }),
+  body: Joi.object({
+    status: Joi.string().valid('on', 'off').required(),
+    weight: Joi.number().required()
+  })
+}
+
 module.exports = {
   changeOnClickWeightValidation,
   createPresetFeedValidation,
   updatePresetFeedValidation,
-  deletePresetFeedValidation
+  deletePresetFeedValidation,
+  updatePetDetectedFeedValidation
 }

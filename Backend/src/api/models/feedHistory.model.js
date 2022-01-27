@@ -2,10 +2,10 @@ const mongoose = require('mongoose')
 
 const FeedHistorySchema = new mongoose.Schema({
   device: {
-    type: mongoose.Types.ObjectId,
-    ref: 'Device'
+    type: String
   },
   detail: [{
+    _id: false,
     weight: {
       type: Number
     },
