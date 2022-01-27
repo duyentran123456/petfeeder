@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations, mapActions } from "vuex";
 import VueDragResize from "vue-drag-resize";
 import BaseButton from "../../components/base/BaseButton.vue";
 import axios from "axios";
@@ -96,7 +96,8 @@ export default {
 
   methods: {
     ...mapMutations(["formAddDevice", "addToast", "showLoading", "hideLoading"]),
-
+    ...mapActions(["getAllDevice"]),
+    
     /**
      * Đóng form thêm mới
      */
@@ -130,7 +131,7 @@ export default {
         this.showLoading();
         axios
           .post(
-            "localhost:8000/api/devices",
+            "http://localhost:8000/api/devices",
             {
               deviceId: this.deviceInfor.deviceId,
               deviceName: this.deviceInfor.deviceName,
@@ -142,7 +143,7 @@ export default {
             }
           )
           .then((response) => {
-            if (response.status == 200) {
+            if (response.data.status == "success") {
               //Đóng form
               this.formAddDevice(false);
               //Thông báo
@@ -150,12 +151,12 @@ export default {
                 message: "Thêm thiết bị thành công",
                 type: "success",
               });
-              //Gọi lại api lấy thiết bị tại đây
-
+              //Gọi lại api lấy thiết bị
+              this.getAllDevice();
             } else {
               //Thông báo
               this.addToast({
-                message: "Thông báo lấy từ response",
+                message: `${response.data.msg}`,
                 type: "error",
               });
             }

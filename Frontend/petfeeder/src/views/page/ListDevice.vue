@@ -30,7 +30,8 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
+import axios from "axios";
 export default {
   name: "ListDevice",
   components: {},
@@ -49,8 +50,41 @@ export default {
     ...mapState(['devices']),
   },
   methods: {
-    removeDevice(deviceId) {
-      debugger
+    ...mapMutations(["addToast", "showLoading", "hideLoading"]),
+    ...mapActions(["getAllDevice"]),
+
+    async removeDevice(deviceId) {
+      await this.showLoading();
+      await axios
+        .delete(`http://localhost:8000/api/devices/${parseInt(deviceId)}`,
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+          },
+        })
+        .then((response) => {
+          if(response.data.status == "success") {
+            this.addToast({
+              message: "Xóa thiết bị thành công",
+              type: "success",
+            });
+            this.getAllDevice(); 
+          }
+          else {
+            this.addToast({
+              message: "Xóa thiết bị thất bại!",
+              type: "error",
+            });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          this.addToast({
+              message: "Xóa thiết bị thất bại!",
+              type: "error",
+            });
+        })
+      await this.hideLoading();
     }
   },
 };

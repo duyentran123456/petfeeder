@@ -127,217 +127,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
-          </tr>
-          <tr>
+          <tr >
             <td>01/01/2021</td>
             <td>9h30'</td>
             <td>100kg</td>
@@ -357,6 +147,7 @@ import "vue2-timepicker/dist/VueTimepicker.css";
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
 import "vue2-datepicker/locale/vi";
+import { mapState, mapMutations, mapActions } from "vuex";
 export default {
   name: "History",
   components: { BaseButton, Switches, Multiselect, VueTimepicker, DatePicker },
@@ -390,6 +181,15 @@ export default {
       ],
     };
   },
+
+  computed: {
+    ...mapState(['deviceCurrent']),
+  },
+
+  watch: {
+    
+  },
+
   mounted() {
     //Xử lý hiển thị text không có kết quả khi tìm kiếm trong combobox
     let spanText = document.querySelectorAll(".multiselect__content li");
