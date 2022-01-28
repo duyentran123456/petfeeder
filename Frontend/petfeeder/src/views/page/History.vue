@@ -127,10 +127,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr >
-            <td>01/01/2021</td>
-            <td>9h30'</td>
-            <td>100kg</td>
+          <tr v-for="(history, index) in historyDevice"
+          :key="index">
+            <td>{{ history.date }}</td>
+            <td>{{ history.time }}</td>
+            <td>{{ history.weight }}g</td>
           </tr>
         </tbody>
       </table>
@@ -139,6 +140,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import BaseButton from "../../components/base/BaseButton.vue";
 import Switches from "vue-switches";
 import Multiselect from "vue-multiselect";
@@ -157,7 +159,7 @@ export default {
       //Tiếng việt cho vue2-datepicker
       lang: "vi",
       //Ẩn hiện bộ lọc
-      isShowFilter: true,
+      isShowFilter: false,
       dateFeedFrom: null,
       dateFeedTo: null,
       //Đánh dấu hiển thị lọc theo lượng thức ăn
@@ -179,17 +181,24 @@ export default {
         { unitID: 1, unitName: "g" },
         { unitID: 2, unitName: "kg" },
       ],
+
+      //thông tin lịch sử
+      historyDevice: [], 
     };
   },
 
+  created() {
+    this.getHistoryDevice();
+  },
+
   computed: {
-    ...mapState(['deviceCurrent']),
+    ...mapState(["deviceCurrent"]),
   },
 
   watch: {
-    deviceCurrent: function() {
+    deviceCurrent: function () {
       this.getHistoryDevice();
-    }
+    },
   },
 
   mounted() {
@@ -221,32 +230,64 @@ export default {
 
     async getHistoryDevice() {
       await this.showLoading();
-      await axios
-        .delete(`http://localhost:8000/api/history/${parseInt(this.deviceCurrent.deviceId)}`,
-        {
-          headers: {
-            Authorization: `Bearer ${window.localStorage.getItem("token")}`,
-          },
-        })
-        .then((response) => {
-          if(response.data.status == "success") {
-            
-          }
-          else {
+      if (parseInt(this.deviceCurrent.deviceId)) {
+        await axios
+          .get(
+            `http://localhost:8000/api/history/${parseInt(
+              this.deviceCurrent.deviceId
+            )}`,
+            {
+              headers: {
+                Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+              },
+            }
+          )
+          .then((response) => {
+            if (response.data.status == "success") {
+              this.historyDevice = this.convertHistory(response.data.data.detail);
+            } else {
+              this.addToast({
+                message: `${response.data.msg}`,
+                type: "error",
+              });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
             this.addToast({
-              message: `${response.data.msg}`,
-              type: "error",
-            });
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          this.addToast({
               message: "Lấy thông tin lịch sử cho ăn thất bại!",
               type: "error",
             });
-        })
+          });
+      }
       await this.hideLoading();
+    },
+
+    /**
+     * Convert thông tin lịch sử lấy về thành dữ liệu hiển thị lên màn hình
+     * Trả về dạng mảng obj {
+     *    weight
+     *    date
+     *    time
+     * }
+     */
+    convertHistory(data) {
+      if(data.length>0) {
+        let history = [];
+        data.map((item) => {
+          let dateTime = new Date(item.time);
+          let arrDateTime = dateTime.toLocaleString().split(",");
+          history.push({
+            weight: item.weight,
+            date: arrDateTime[0],
+            time: arrDateTime[1],
+          })
+        });
+        return history;
+      }
+      else { 
+        return [];
+      }
     },
 
     //Cấu hình hiển thị toán tử lọc lượng thức ăn
@@ -299,8 +340,8 @@ export default {
 
 .filter-hide-title {
   width: 100%;
-    justify-content: center;
-    border-bottom: 1px solid #dddddd;
+  justify-content: center;
+  border-bottom: 1px solid #dddddd;
 }
 
 .filter-hide-title i {
