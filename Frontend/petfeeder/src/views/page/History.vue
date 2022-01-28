@@ -187,7 +187,9 @@ export default {
   },
 
   watch: {
-    
+    deviceCurrent: function() {
+      this.getHistoryDevice();
+    }
   },
 
   mounted() {
@@ -215,6 +217,38 @@ export default {
   },
 
   methods: {
+    ...mapMutations(["addToast", "showLoading", "hideLoading"]),
+
+    async getHistoryDevice() {
+      await this.showLoading();
+      await axios
+        .delete(`http://localhost:8000/api/history/${parseInt(this.deviceCurrent.deviceId)}`,
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+          },
+        })
+        .then((response) => {
+          if(response.data.status == "success") {
+            
+          }
+          else {
+            this.addToast({
+              message: `${response.data.msg}`,
+              type: "error",
+            });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          this.addToast({
+              message: "Lấy thông tin lịch sử cho ăn thất bại!",
+              type: "error",
+            });
+        })
+      await this.hideLoading();
+    },
+
     //Cấu hình hiển thị toán tử lọc lượng thức ăn
     displayOperator({ operatorName }) {
       return `${operatorName}`;
@@ -551,6 +585,7 @@ export default {
 }
 
 .history-grid table thead tr th {
+  padding-left: 40px;
   min-width: 120px;
   width: 12%;
   font-family: "OpenSans-SemiBold";
