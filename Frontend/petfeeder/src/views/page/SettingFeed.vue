@@ -204,6 +204,11 @@ export default {
   created(){
       const deviceId = this.$store.state.deviceCurrent.deviceId;
       const url = 'http://127.0.0.1:8000/api/devices/' + deviceId;
+      const token = window.localStorage.getItem('token');
+      const headers = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
       const data = {};
       axios.get(url, {headers})
       .then((res) => {
