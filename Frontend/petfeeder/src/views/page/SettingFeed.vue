@@ -64,9 +64,15 @@
           <h3>Cho ăn tự động</h3>
         </div>
         <div class="card-body text-center">
-          <label class="switch">
-            <input type="checkbox" v-model="autoFeeding" checked>
-            <span class="slider round"></span>
+          <p class="flex">Lượng thức ăn: (gam)</p>
+          <div class="d-flex align-items-center w-100 mb-3">        
+            <input type="text" class="form-control me-3 fs-3" v-model="autoFeeding.weight">
+          </div>
+        </div>
+        <div class="card-footer text-center">
+          <label class="switch mb-2">
+            <input type="checkbox" v-model="autoFeeding.status" checked>
+            <span class="slider round" @click="autoFeedingFunction"></span>
           </label>
         </div>
       </div>
@@ -128,12 +134,13 @@ import AppVue from '../../App.vue';
 import { mapMutations } from "vuex";
 import { mapState } from "vuex";
 
-const token = window.localStorage.getItem('token'); 
-
+const token = window.localStorage.getItem('token');
 const headers = {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`
       }
+
+const deviceId = 1;
 
 export default {
   name: "SettingFeed",
@@ -196,17 +203,22 @@ export default {
           {value: 'off', text: 'off'}
         ]
       },
-      autoFeeding: true
+      autoFeeding: {
+        weight: 0,
+        status: false
+      }
     }
   },
   created(){
-      const url = 'http://127.0.0.1:8000/api/devices/1';
+      const url = 'http://127.0.0.1:8000/api/devices/' + deviceId;
       const data = {};
       axios.get(url, {headers})
       .then((res) => {
         //perform success action
         this.items = res.data.data.presetFeed;
         this.onClickWeight.weight = res.data.data.onClickFeedWeight;
+        this.autoFeeding.status = res.data.data.petDetectedFeedWeight.status=='on'?true:false;
+        this.autoFeeding.weight = res.data.data.petDetectedFeedWeight.weight;
       })
       .catch((error) => {
         //error.response.status check status code
@@ -217,12 +229,43 @@ export default {
         //perform action in always
       });
   },
+  // watch:{
+  //   deviceId: function(){
+  //     const url = 'http://127.0.0.1:8000/api/devices/' + deviceId;
+  //     const data = {};
+  //     axios.get(url, {headers})
+  //     .then((res) => {
+  //       //perform success action
+  //       this.items = res.data.data.presetFeed;
+  //       this.onClickWeight.weight = res.data.data.onClickFeedWeight;
+  //       this.autoFeeding.status = res.data.data.petDetectedFeedWeight.status=='on'?true:false;
+  //       this.autoFeeding.weight = res.data.data.petDetectedFeedWeight.weight;
+  //     })
+  //     .catch((error) => {
+  //       //error.response.status check status code
+  //       //error network
+  //       console.log(error);
+  //     })
+  //     .finally(() => {
+  //       //perform action in always
+  //     });
+  //   }
+  // },
+  // computed:{
+    // token(){
+    //   return window.localStorage.getItem('token');
+    // },
+    // deviceId(){
+    //   return this.$store.state.deviceCurrent.deviceId;
+    // }
+  // },
   methods: {
     ...mapState(["deviceCurrent"]),
     ...mapMutations(["addToast","showLoading", "hideLoading"]),
     onChangeClickWeight(e){
       e.preventDefault(); 
-      axios.put('http://127.0.0.1:8000/api/feeding/onClick/1', this.onClickWeight, {headers})
+      // const deviceId = this.deviceCurrent.deviceId;
+      axios.put('http://127.0.0.1:8000/api/feeding/onClick/' + deviceId, this.onClickWeight, {headers})
       .then((res) => {
         //perform success action
         this.addToast({
@@ -244,7 +287,8 @@ export default {
     },
 
     onClickFeed(){
-      const url = 'http://127.0.0.1:8000/api/feeding/onClick/1';
+      // const deviceId = this.deviceCurrent.deviceId;
+      const url = 'http://127.0.0.1:8000/api/feeding/onClick/' + deviceId;
       console.log(url);
       const data = {};
       axios.post(url, data, {headers})
@@ -269,7 +313,8 @@ export default {
     },
     onFresetFeeding(e){
       e.preventDefault();
-      const url = 'http://127.0.0.1:8000/api/feeding/preset/1';
+      // const deviceId = this.deviceCurrent.deviceId;
+      const url = 'http://127.0.0.1:8000/api/feeding/preset/' + deviceId;
       const data = {
         status: 'on',
         weight: this.form.weight,
@@ -320,7 +365,7 @@ export default {
       this.edit.date.mm = item.date.substring(3);
     },
     saveEditForm(id){
-      const url = 'http://127.0.0.1:8000/api/feeding/preset/1/' + id;
+      const url = 'http://127.0.0.1:8000/api/feeding/preset/' + deviceId + '/' + id;
       console.log(url);
       const data = {
         status: this.edit.status,
@@ -352,7 +397,7 @@ export default {
       });
     },
     deleteItem(id){
-      const url = "http://127.0.0.1:8000/api/feeding/preset/1/" + id;
+      const url = "http://127.0.0.1:8000/api/feeding/preset/" + deviceId + '/' + id;
       axios.delete(url, {headers})
       .then((res) => {
         //perform success action
@@ -367,6 +412,41 @@ export default {
         //error network
         this.addToast({
               message: "Xóa thất bại!",
+              type: "error",
+            });
+      })
+      .finally(() => {
+        //perform action in always
+      });
+    },
+    autoFeedingFunction(){
+      const url = 'http://127.0.0.1:8000/api/feeding/petDetected/' + deviceId;
+      console.log(this.autoFeeding.status?'off':'on', this.autoFeeding.weight);
+      const data = {
+        'status': this.autoFeeding.status?'off':'on',
+        'weight': this.autoFeeding.weight
+      };
+      axios.put(url, data, {headers})
+      .then((res) => {
+        //perform success action
+        if(this.autoFeeding.status){
+          this.addToast({
+              message: "Cho ăn tự động được bật!",
+              type: "success",
+            });
+        }else{
+          this.addToast({
+              message: "Cho ăn tự động đã tắt!",
+              type: "error",
+            });
+        }
+        
+      })
+      .catch((error) => {
+        //error.response.status check status code
+        //error network
+        this.addToast({
+              message: "Lỗi trong quá trình cho ăn!",
               type: "error",
             });
       })
