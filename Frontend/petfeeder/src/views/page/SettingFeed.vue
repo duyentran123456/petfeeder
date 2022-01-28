@@ -140,8 +140,6 @@ const headers = {
         "Authorization": `Bearer ${token}`
       }
 
-const deviceId = 1;
-
 export default {
   name: "SettingFeed",
   components: {VueTimepicker},
@@ -210,6 +208,7 @@ export default {
     }
   },
   created(){
+      const deviceId = this.$store.state.deviceCurrent.deviceId;
       const url = 'http://127.0.0.1:8000/api/devices/' + deviceId;
       const data = {};
       axios.get(url, {headers})
@@ -229,42 +228,43 @@ export default {
         //perform action in always
       });
   },
-  // watch:{
-  //   deviceId: function(){
-  //     const url = 'http://127.0.0.1:8000/api/devices/' + deviceId;
-  //     const data = {};
-  //     axios.get(url, {headers})
-  //     .then((res) => {
-  //       //perform success action
-  //       this.items = res.data.data.presetFeed;
-  //       this.onClickWeight.weight = res.data.data.onClickFeedWeight;
-  //       this.autoFeeding.status = res.data.data.petDetectedFeedWeight.status=='on'?true:false;
-  //       this.autoFeeding.weight = res.data.data.petDetectedFeedWeight.weight;
-  //     })
-  //     .catch((error) => {
-  //       //error.response.status check status code
-  //       //error network
-  //       console.log(error);
-  //     })
-  //     .finally(() => {
-  //       //perform action in always
-  //     });
-  //   }
-  // },
-  // computed:{
-    // token(){
-    //   return window.localStorage.getItem('token');
-    // },
-    // deviceId(){
-    //   return this.$store.state.deviceCurrent.deviceId;
-    // }
-  // },
+  watch:{
+    deviceId: function(){
+      const deviceId = this.$store.state.deviceCurrent.deviceId;
+      const url = 'http://127.0.0.1:8000/api/devices/' + deviceId;
+      const data = {};
+      axios.get(url, {headers})
+      .then((res) => {
+        //perform success action
+        this.items = res.data.data.presetFeed;
+        this.onClickWeight.weight = res.data.data.onClickFeedWeight;
+        this.autoFeeding.status = res.data.data.petDetectedFeedWeight.status=='on'?true:false;
+        this.autoFeeding.weight = res.data.data.petDetectedFeedWeight.weight;
+      })
+      .catch((error) => {
+        //error.response.status check status code
+        //error network
+        console.log(error);
+      })
+      .finally(() => {
+        //perform action in always
+      });
+    }
+  },
+  computed:{
+    token(){
+      return window.localStorage.getItem('token');
+    },
+    deviceId(){
+      return this.$store.state.deviceCurrent.deviceId;
+    }
+  },
   methods: {
     ...mapState(["deviceCurrent"]),
     ...mapMutations(["addToast","showLoading", "hideLoading"]),
     onChangeClickWeight(e){
       e.preventDefault(); 
-      // const deviceId = this.deviceCurrent.deviceId;
+      const deviceId = this.$store.state.deviceCurrent.deviceId;
       axios.put('http://127.0.0.1:8000/api/feeding/onClick/' + deviceId, this.onClickWeight, {headers})
       .then((res) => {
         //perform success action
@@ -287,7 +287,7 @@ export default {
     },
 
     onClickFeed(){
-      // const deviceId = this.deviceCurrent.deviceId;
+      const deviceId = this.$store.state.deviceCurrent.deviceId;
       const url = 'http://127.0.0.1:8000/api/feeding/onClick/' + deviceId;
       console.log(url);
       const data = {};
@@ -313,7 +313,7 @@ export default {
     },
     onFresetFeeding(e){
       e.preventDefault();
-      // const deviceId = this.deviceCurrent.deviceId;
+      const deviceId = this.$store.state.deviceCurrent.deviceId;
       const url = 'http://127.0.0.1:8000/api/feeding/preset/' + deviceId;
       const data = {
         status: 'on',
@@ -365,6 +365,7 @@ export default {
       this.edit.date.mm = item.date.substring(3);
     },
     saveEditForm(id){
+      const deviceId = this.$store.state.deviceCurrent.deviceId;
       const url = 'http://127.0.0.1:8000/api/feeding/preset/' + deviceId + '/' + id;
       console.log(url);
       const data = {
@@ -397,6 +398,7 @@ export default {
       });
     },
     deleteItem(id){
+      const deviceId = this.$store.state.deviceCurrent.deviceId;
       const url = "http://127.0.0.1:8000/api/feeding/preset/" + deviceId + '/' + id;
       axios.delete(url, {headers})
       .then((res) => {
@@ -420,6 +422,7 @@ export default {
       });
     },
     autoFeedingFunction(){
+      const deviceId = this.$store.state.deviceCurrent.deviceId;
       const url = 'http://127.0.0.1:8000/api/feeding/petDetected/' + deviceId;
       console.log(this.autoFeeding.status?'off':'on', this.autoFeeding.weight);
       const data = {
