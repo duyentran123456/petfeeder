@@ -134,12 +134,6 @@ import AppVue from '../../App.vue';
 import { mapMutations } from "vuex";
 import { mapState } from "vuex";
 
-const token = window.localStorage.getItem('token');
-const headers = {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      }
-
 export default {
   name: "SettingFeed",
   components: {VueTimepicker},
@@ -231,6 +225,11 @@ export default {
   watch:{
     deviceId: function(){
       const deviceId = this.$store.state.deviceCurrent.deviceId;
+      const token = window.localStorage.getItem('token');
+      const headers = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
       const url = 'http://127.0.0.1:8000/api/devices/' + deviceId;
       const data = {};
       axios.get(url, {headers})
@@ -265,6 +264,11 @@ export default {
     onChangeClickWeight(e){
       e.preventDefault(); 
       const deviceId = this.$store.state.deviceCurrent.deviceId;
+      const token = window.localStorage.getItem('token');
+      const headers = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
       axios.put('http://127.0.0.1:8000/api/feeding/onClick/' + deviceId, this.onClickWeight, {headers})
       .then((res) => {
         //perform success action
@@ -291,6 +295,11 @@ export default {
       const url = 'http://127.0.0.1:8000/api/feeding/onClick/' + deviceId;
       console.log(url);
       const data = {};
+      const token = window.localStorage.getItem('token');
+      const headers = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
       axios.post(url, data, {headers})
       .then((res) => {
         //perform success action
@@ -313,6 +322,11 @@ export default {
     },
     onFresetFeeding(e){
       e.preventDefault();
+      const token = window.localStorage.getItem('token');
+      const headers = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
       const deviceId = this.$store.state.deviceCurrent.deviceId;
       const url = 'http://127.0.0.1:8000/api/feeding/preset/' + deviceId;
       const data = {
@@ -366,6 +380,11 @@ export default {
     },
     saveEditForm(id){
       const deviceId = this.$store.state.deviceCurrent.deviceId;
+      const token = window.localStorage.getItem('token');
+      const headers = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
       const url = 'http://127.0.0.1:8000/api/feeding/preset/' + deviceId + '/' + id;
       console.log(url);
       const data = {
@@ -399,6 +418,11 @@ export default {
     },
     deleteItem(id){
       const deviceId = this.$store.state.deviceCurrent.deviceId;
+      const token = window.localStorage.getItem('token');
+      const headers = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
       const url = "http://127.0.0.1:8000/api/feeding/preset/" + deviceId + '/' + id;
       axios.delete(url, {headers})
       .then((res) => {
@@ -423,6 +447,11 @@ export default {
     },
     autoFeedingFunction(){
       const deviceId = this.$store.state.deviceCurrent.deviceId;
+      const token = window.localStorage.getItem('token');
+      const headers = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
       const url = 'http://127.0.0.1:8000/api/feeding/petDetected/' + deviceId;
       console.log(this.autoFeeding.status?'off':'on', this.autoFeeding.weight);
       const data = {
