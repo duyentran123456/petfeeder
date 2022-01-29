@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const FeedHistorySchema = new mongoose.Schema({
-  device: {
+  deviceId: {
     type: String
   },
   detail: [{
