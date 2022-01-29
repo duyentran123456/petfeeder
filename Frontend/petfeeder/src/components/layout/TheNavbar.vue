@@ -1,30 +1,35 @@
 <template>
   <div class="_navbar">
     <base-item-navbar
+      v-if="role=='admin'"
       path="/app/dashboard"
       itemText="Tổng quan"
       classIcon="far fa-chart-bar"
     >
     </base-item-navbar>
     <base-item-navbar
+      v-if="role=='user'"
       path="/app/setting-feed"
       itemText="Đặt lịch cho ăn"
       classIcon="far fa-calendar-alt"
     >
     </base-item-navbar>
     <base-item-navbar
+      v-if="role=='user'"
       path="/app/history"
       itemText="Lịch sử cho ăn"
       classIcon="fas fa-history"
     >
     </base-item-navbar>
     <base-item-navbar
+      v-if="role=='admin'"
       path="/app/manage-user"
       itemText="Quản lý người dùng"
       classIcon="fas fa-users-cog"
     >
     </base-item-navbar>
     <base-item-navbar
+      v-if="role=='user'"
       path="/app/list-device"
       itemText="Danh sách thiết bị"
       classIcon="fas fa-camera"
@@ -35,10 +40,16 @@
 
 <script>
 import BaseItemNavbar from "../base/BaseItemNavbar.vue";
+import { mapState, mapMutations, mapActions } from "vuex";
 export default {
   name: "TheNavbar",
   components: {
     BaseItemNavbar,
+  },
+  computed: {
+    role() {
+      return window.localStorage.getItem("role");
+    }
   },
 };
 </script>

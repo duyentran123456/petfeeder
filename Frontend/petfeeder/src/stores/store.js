@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import axios from "axios";
 
 Vue.use(Vuex);
 
@@ -11,9 +12,6 @@ const store = new Vuex.Store({
     formProfile: false,
     //Trạng thái đóng mở form đổi mật khẩu
     formChangePassword: false,
-
-    //token
-    token: null,
 
     deviceInfor: {},
 
@@ -33,38 +31,22 @@ const store = new Vuex.Store({
     /**
      * Dách sách thiết bị
      */
-    devices: [
-      {
-        petDetectedFeedWeight: {
-          status: "on",
-          weight: 100,
-        },
-        deviceId: "1",
-        deviceName: "kiki",
-        onClickFeedWeight: 100,
-        presetFeed: [],
-      },
-      {
-        petDetectedFeedWeight: {
-          status: "on",
-          weight: 100,
-        },
-        deviceId: "2",
-        deviceName: "hello",
-        onClickFeedWeight: 100,
-        presetFeed: [],
-      },
-      {
-        petDetectedFeedWeight: {
-          status: "off",
-          weight: 100,
-        },
-        deviceId: "3",
-        deviceName: "hello",
-        onClickFeedWeight: 100,
-        presetFeed: [],
-      },
-    ],
+    devices: [],
+
+    /**
+     * Thông tin tài khoản
+     */
+    inforAccount: null,
+
+    /**
+     * Thông tin tổng quan cho admin
+     */
+    dashboardAdmin: {
+      devices: null,
+      totalDevices: null,
+      users: null,
+      totalUsers: null,
+    },
 
     //Trạng thái loading
     loading: false,
@@ -86,10 +68,6 @@ const store = new Vuex.Store({
     //Đóng mở form đổi mật khẩu
     formChangePassword(state, formChangePassword) {
       state.formChangePassword = formChangePassword;
-    },
-
-    setToken(state, token) {
-      state.token = token;
     },
 
     /**
@@ -118,18 +96,108 @@ const store = new Vuex.Store({
       state.devices = devices;
     },
 
+    setInforAccount(state, inforAccount) {
+      state.inforAccount = inforAccount;
+    },
+
+    setDashboardAdmin(state, dashboardAdmin) {
+      state.dashboardAdmin = dashboardAdmin;
+    },
+
     //Thay đổi trạng thái loading
     showLoading(state) {
-        state.loading = true;
+      state.loading = true;
     },
 
     hideLoading(state) {
-        state.loading = false;
-    }
-
+      state.loading = false;
+    },
   },
 
-  actions: {},
+  actions: {
+    /**
+     * Lấy tất cả thiết bị
+     */
+    async getAllDevice({ commit }) {
+      await commit("showLoading");
+      await axios
+        .get("http://localhost:8000/api/devices", {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+          },
+        })
+        .then((response) => {
+          if (response.data.status == "success") {
+            commit("setDevices", response.data.data.devices);
+            if (response.data.data.devices.length > 0) {
+              commit("setDeviceCurrent", response.data.data.devices[0]); //Lấy thiết bị đầu tiên làm thiết bị hiện tại
+            } else if (window.localStorage.getItem("role") == "user") {
+              commit("setDeviceCurrent", {
+                deviceId: "",
+                deviceName: "",
+              });
+              commit("addToast", {
+                message:
+                  "Bạn chưa có thiết bị trong danh sách. Thêm thiết bị để sử dụng!",
+                type: "warning",
+              });
+            }
+          } else {
+            commit("addToast", {
+              message: "Lấy thông tin thiết bị thất bại!",
+              type: "error",
+            });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          commit("addToast", {
+            message: "Lấy thông tin thiết bị thất bại!",
+            type: "error",
+          });
+        });
+      await commit("hideLoading");
+    },
+
+    /**
+     * Lấy thông tin tổng quan cho admin
+     */
+    async getDashboard({ commit }) {
+      await commit("showLoading");
+      await axios
+        .get("http://localhost:8000/api/dashboard", {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+          },
+        })
+        .then((response) => {
+          let data = response.data.data;
+          if (response.data.status == "success") {
+            commit("setDashboardAdmin", {
+              devices: data.devices.devices,
+              totalDevices: data.devices.totalDevices,
+              users: data.users.users,
+              totalUsers: data.users.totalUsers,
+            });
+          } else {
+            //Thông báo
+            commit("addToast", {
+              message: `${response.data.msg}`,
+              type: "error",
+            });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          //Thông báo
+          commit("addToast", {
+            message: "Lấy thông tin người dùng và thiết bị thất bại!",
+            type: "error",
+          });
+        });
+      await commit("hideLoading");
+    },
+  },
 });
 
 export default store;

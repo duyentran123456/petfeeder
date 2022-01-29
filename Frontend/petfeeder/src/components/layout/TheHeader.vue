@@ -6,7 +6,8 @@
     </div>
     <div class="header-center flex">
       <multiselect
-        v-model="deviceComboCurrent" 
+        v-if="role == 'user'"
+        v-model="deviceCurrent"
         :options="devices"
         :custom-label="displayDevice"
         :allow-empty="false"
@@ -16,7 +17,8 @@
         track-by="deviceId"
       ></multiselect>
       <base-button
-      class="btn-add-device"
+        v-if="role == 'user'"
+        class="btn-add-device"
         classButton="btn-custom-primary"
         textButton="Thêm thiết bị"
         @clickButton="addDevice"
@@ -32,7 +34,7 @@
         <ul class="avatar-option">
           <li @click="showFromProfile">Thông tin tài khoản</li>
           <li @click="showFromChangePassword">Đổi mật khẩu</li>
-          <li>Đăng xuất</li>
+          <li @click="logout">Đăng xuất</li>
         </ul>
       </div>
     </div>
@@ -40,7 +42,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 import Multiselect from "vue-multiselect";
 import BaseButton from "../base/BaseButton.vue";
 
@@ -52,17 +54,35 @@ export default {
   },
   data() {
     return {
-      deviceComboCurrent: null,
+      deviceCurrent: null,
     };
   },
+  async created() {
+    //Lấy danh sách thiết bị
+    await this.getAllDevice();
+    if (this.devices.length > 0) {
+      this.deviceCurrent = this.devices[0]; //Luôn lấy thiết bị đầu tiên là tbi hiện tại
+    }
+  },
   computed: {
-    ...mapState(['deviceCurrent', 'devices']),
+    ...mapState({
+      deviceCurrentStore: (state) => state.deviceCurrent,
+      devices: (state) => state.devices,
+      //inforAccount: (state) => state.inforAccount,
+    }),
+    role() {
+      return window.localStorage.getItem("role");
+    }
   },
   watch: {
     //Cập nhật lại thiết bị hiện tại
-    deviceComboCurrent: function() {
-      this.setDeviceCurrent(this.deviceComboCurrent)
-    }
+    deviceCurrent: function () {
+      this.setDeviceCurrent(this.deviceCurrent);
+    },
+    //Cập nhật thiết bị khi store cập nhật
+    deviceCurrentStore: function () {
+      this.deviceCurrent = this.deviceCurrentStore;
+    },
   },
   mounted() {
     //Xử lý hiển thị text không có kết quả khi tìm kiếm trong combobox
@@ -76,11 +96,15 @@ export default {
         span.innerText = "Không có kết quả";
       }
     });
-    
   },
   methods: {
-    ...mapMutations(['formAddDevice', 'formProfile', 'formChangePassword', 'setDeviceCurrent']),
-
+    ...mapMutations([
+      "formAddDevice",
+      "formProfile",
+      "formChangePassword",
+      "setDeviceCurrent",
+    ]),
+    ...mapActions(["getAllDevice"]),
     /**
      * Cấu hình hiển thị combobox
      */
@@ -107,6 +131,14 @@ export default {
      */
     showFromChangePassword() {
       this.formChangePassword(true);
+    },
+
+    /**
+     * Đăng xuất
+     */
+    logout() {
+      window.localStorage.setItem("token", "");
+      this.$router.push("/login");
     },
   },
 };

@@ -8,162 +8,17 @@
             <th scope="col">#</th>
             <th scope="col">Username</th>
             <th scope="col">Email</th>
-            <th scope="col">Fullname</th>
             <th scope="col">Gender</th>
-            <th scope="col">Address</th>
-            <th scope="col">Phone</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>abc@gmail.com</td>
-            <td>Tony Mark</td>
-            <td>Male</td>
-            <td>abcd</td>
-            <td>0123456</td>
-            <td><i class="far fa-trash-alt btn-delete"></i></td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>abc@gmail.com</td>
-            <td>Tony Mark</td>
-            <td>Male</td>
-            <td>abcd</td>
-            <td>0123456</td>
-            <td><i class="far fa-trash-alt btn-delete"></i></td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>abc@gmail.com</td>
-            <td>Tony Mark</td>
-            <td>Male</td>
-            <td>abcd</td>
-            <td>0123456</td>
-            <td><i class="far fa-trash-alt btn-delete"></i></td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>abc@gmail.com</td>
-            <td>Tony Mark</td>
-            <td>Male</td>
-            <td>abcd</td>
-            <td>0123456</td>
-            <td><i class="far fa-trash-alt btn-delete"></i></td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>abc@gmail.com</td>
-            <td>Tony Mark</td>
-            <td>Male</td>
-            <td>abcd</td>
-            <td>0123456</td>
-            <td><i class="far fa-trash-alt btn-delete"></i></td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>abc@gmail.com</td>
-            <td>Tony Mark</td>
-            <td>Male</td>
-            <td>abcd</td>
-            <td>0123456</td>
-            <td><i class="far fa-trash-alt btn-delete"></i></td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>abc@gmail.com</td>
-            <td>Tony Mark</td>
-            <td>Male</td>
-            <td>abcd</td>
-            <td>0123456</td>
-            <td><i class="far fa-trash-alt btn-delete"></i></td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>abc@gmail.com</td>
-            <td>Tony Mark</td>
-            <td>Male</td>
-            <td>abcd</td>
-            <td>0123456</td>
-            <td><i class="far fa-trash-alt btn-delete"></i></td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>abc@gmail.com</td>
-            <td>Tony Mark</td>
-            <td>Male</td>
-            <td>abcd</td>
-            <td>0123456</td>
-            <td><i class="far fa-trash-alt btn-delete"></i></td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>abc@gmail.com</td>
-            <td>Tony Mark</td>
-            <td>Male</td>
-            <td>abcd</td>
-            <td>0123456</td>
-            <td><i class="far fa-trash-alt btn-delete"></i></td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>abc@gmail.com</td>
-            <td>Tony Mark</td>
-            <td>Male</td>
-            <td>abcd</td>
-            <td>0123456</td>
-            <td><i class="far fa-trash-alt btn-delete"></i></td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>abc@gmail.com</td>
-            <td>Tony Mark</td>
-            <td>Male</td>
-            <td>abcd</td>
-            <td>0123456</td>
-            <td><i class="far fa-trash-alt btn-delete"></i></td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>abc@gmail.com</td>
-            <td>Tony Mark</td>
-            <td>Male</td>
-            <td>abcd</td>
-            <td>0123456</td>
-            <td><i class="far fa-trash-alt btn-delete"></i></td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>abc@gmail.com</td>
-            <td>Tony Mark</td>
-            <td>Male</td>
-            <td>abcd</td>
-            <td>0123456</td>
-            <td><i class="far fa-trash-alt btn-delete"></i></td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>abc@gmail.com</td>
-            <td>Tony Mark</td>
-            <td>Male</td>
-            <td>abcd</td>
-            <td>0123456</td>
+          <tr v-for="(user, index) in dashboardAdmin.users"
+          :key="index">
+            <th scope="row">{{ index+1 }}</th>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.gender }}</td>
             <td><i class="far fa-trash-alt btn-delete"></i></td>
           </tr>
         </tbody>
@@ -173,11 +28,18 @@
 </template>
 
 <script>
+import { mapState, mapMutations, mapActions } from "vuex";
 export default {
   name: "ManageUser",
   components: {},
-  props: {
-
+  created() {
+    this.getDashboard();
+  },
+  computed: {
+    ...mapState(["dashboardAdmin"]),
+  },
+  methods: {
+    ...mapActions(["getDashboard"]),
   },
 };
 </script>

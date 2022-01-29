@@ -73,14 +73,19 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.path != "/login") {
-    if(window.localStorage.getItem('token')) {
-      next();
-    } else {
-      next("/login");
+  if(to.name !== 'Login' && to.name !== 'Register' && !window.localStorage.getItem('token')) {
+    next({ name: 'Login' });
+  }
+  else {
+    if((to.name == 'Dashboard' || to.name == 'ManageUser') && window.localStorage.getItem("role") == "user") {
+      next({ name: 'SettingFeed' });
     }
-  } else {
-    next();
+    else if((to.name == 'SettingFeed' || to.name == 'History' || to.name == 'ListDevice') && window.localStorage.getItem("role") == "admin") {
+      next({ name: 'Dashboard' });
+    }
+    else {
+      next();
+    }
   }
 });
 
