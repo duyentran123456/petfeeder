@@ -13,6 +13,7 @@ const feedingRouter = require('./src/api/routes/feeding.route')
 const historyRouter = require('./src/api/routes/history.route')
 const adminRouter = require('./src/api/routes/admin.route')
 const apiResponse = require('./src/api/utils/apiResponse')
+const mqttClient = require('./src/api/services/mqtt.service')
 
 require('./src/api/db/mongoose')
 

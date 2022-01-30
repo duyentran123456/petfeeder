@@ -47,8 +47,16 @@ const updatePetDetectedFeedValidation = {
     deviceId: Joi.string().required()
   }),
   body: Joi.object({
-    status: Joi.string().valid('on', 'off').required(),
     weight: Joi.number().required()
+  })
+}
+
+const changePetDetectedStatusValidation = {
+  params: Joi.object({
+    deviceId: Joi.string().required()
+  }),
+  body: Joi.object({
+    status: Joi.string().valid('on', 'off').required()
   })
 }
 
@@ -57,5 +65,6 @@ module.exports = {
   createPresetFeedValidation,
   updatePresetFeedValidation,
   deletePresetFeedValidation,
-  updatePetDetectedFeedValidation
+  updatePetDetectedFeedValidation,
+  changePetDetectedStatusValidation
 }

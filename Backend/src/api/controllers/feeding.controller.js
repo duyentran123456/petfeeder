@@ -1,8 +1,8 @@
 const APIStatus = require('../constants/APIStatus')
-const { changeOnClickWeightDb, createPresetFeedDb, updatePresetFeedDb, deletePresetFeedDb, updatePetDetectedFeedDb } = require('../db/feeding.db')
-const { createHistoryDb } = require('../db/history.db')
+const { changeOnClickWeightDb, createPresetFeedDb, updatePresetFeedDb, deletePresetFeedDb, updatePetDetectedFeedDb, changePetDetectedStatusDb } = require('../db/feeding.db')
 const { getDeviceByDeviceIdDb } = require('../db/device.db')
 const apiResponse = require('../utils/apiResponse')
+const mqttClient = require('../services/mqtt.service')
 
 const feedOnClick = async (req, res, next) => {
   const user = req.user
@@ -10,10 +10,14 @@ const feedOnClick = async (req, res, next) => {
 
   if (!user.devices.includes(deviceId)) return res.status(400).json(apiResponse({ status: APIStatus.FAIL, msg: 'You dont have this device' }))
   const device = await getDeviceByDeviceIdDb({ deviceId })
-  // send msg to mqtt
-  // [todo]
+  if (device.petDetectedFeedWeight.status === 'on') return res.status(200).json(apiResponse({ status: APIStatus.FAIL, msg: 'Bạn không thể cho ăn trực tiếp khi đang ở chế độ cho ăn tự động' }))
 
-  await createHistoryDb({ deviceId, weight: device.onClickFeedWeight, time: new Date() })
+  const message = {
+    DeviceId: deviceId,
+    Task: '1',
+    Weight: device.onClickFeedWeight
+  }
+  mqttClient.publish('/command', JSON.stringify(message))
 
   return res.status(200).json(apiResponse({ status: APIStatus.SUCCESS, msg: 'Your pet is feeded' }))
 }
@@ -78,12 +82,42 @@ const deletePresetFeed = async (req, res, next) => {
 const updatePetDetectedFeed = async (req, res, next) => {
   const user = req.user
   const { deviceId } = req.params
-  const { status, weight } = req.body
+  const { weight } = req.body
 
   if (!user.devices.includes(deviceId)) return res.status(400).json(apiResponse({ status: APIStatus.FAIL, msg: 'You dont have this device' }))
 
-  const rs = await updatePetDetectedFeedDb({ deviceId, status, weight })
+  const rs = await updatePetDetectedFeedDb({ deviceId, weight })
+  if (rs.petDetectedFeedWeight.status === 'on') {
+    const message = {
+      DeviceId: deviceId,
+      Task: '2',
+      Weight: weight
+    }
+    mqttClient.publish('/command', JSON.stringify(message))
+  }
+
   return res.status(200).json(apiResponse({ status: APIStatus.SUCCESS, msg: 'update pet detected successfully', data: rs }))
+}
+
+const changePetDetectedStatus = async (req, res, next) => {
+  const user = req.user
+  const { deviceId } = req.params
+  const { status } = req.body
+
+  if (!user.devices.includes(deviceId)) return res.status(400).json(apiResponse({ status: APIStatus.FAIL, msg: 'You dont have this device' }))
+
+  const rs = await changePetDetectedStatusDb({ deviceId, status })
+  if (rs.petDetectedFeedWeight.status === 'on') {
+    const message = {
+      DeviceId: deviceId,
+      Task: '2',
+      Weight: rs.petDetectedFeedWeight.weight
+    }
+    mqttClient.publish('/command', JSON.stringify(message))
+  } else {
+    // [todo]
+  }
+  return res.status(200).json(apiResponse({ status: APIStatus.SUCCESS, msg: 'change pet detected status successfully', data: rs }))
 }
 
 module.exports = {
@@ -92,5 +126,6 @@ module.exports = {
   createPresetFeed,
   updatePresetFeed,
   deletePresetFeed,
-  updatePetDetectedFeed
+  updatePetDetectedFeed,
+  changePetDetectedStatus
 }

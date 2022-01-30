@@ -160,6 +160,15 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get user info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
 				}
 			]
 		},
@@ -501,13 +510,42 @@
 					"response": []
 				},
 				{
-					"name": "update pet detected feeding",
+					"name": "change pet detected status",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"off\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/feeding/petDetected/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"feeding",
+								"petDetected",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change pet detected weight",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"status\":\"on\",\r\n    \"weight\": 100\r\n}",
+							"raw": "{\r\n    \"weight\": 500\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
