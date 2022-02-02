@@ -67,6 +67,7 @@
           <p class="flex">Lượng thức ăn: (gam)</p>
           <div class="d-flex align-items-center w-100 mb-3">        
             <input type="text" class="form-control me-3 fs-3" v-model="autoFeeding.weight">
+            <button type="submit" class="border-0 bg-light btn-change-onclick-weight fas fa-sync-alt" @click="changeWeightDetected"></button>  
           </div>
         </div>
         <div class="card-footer text-center">
@@ -266,6 +267,33 @@ export default {
   methods: {
     ...mapState(["deviceCurrent"]),
     ...mapMutations(["addToast","showLoading", "hideLoading"]),
+    changeWeightDetected(){
+      const deviceId = this.$store.state.deviceCurrent.deviceId;
+      const token = window.localStorage.getItem('token');
+      const headers = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+      axios.put('http://127.0.0.1:8000/api/feeding/petDetected/' + deviceId, {"weight" : this.autoFeeding.weight}, {headers})
+      .then((res) => {
+        //perform success action
+        this.addToast({
+              message: "Đã đổi lượng thức ăn !",
+              type: "success",
+            });
+      })
+      .catch((error) => {
+        //error.response.status check status code
+        //error network
+        this.addToast({
+              message: "Đổi lượng thức ăn thất bại!",
+              type: "error",
+            });
+      })
+      .finally(() => {
+        //perform action in always
+      });
+    },
     onChangeClickWeight(e){
       e.preventDefault(); 
       const deviceId = this.$store.state.deviceCurrent.deviceId;
@@ -458,12 +486,10 @@ export default {
         "Authorization": `Bearer ${token}`
       }
       const url = 'http://127.0.0.1:8000/api/feeding/petDetected/' + deviceId;
-      console.log(this.autoFeeding.status?'off':'on', this.autoFeeding.weight);
       const data = {
-        'status': this.autoFeeding.status?'off':'on',
-        'weight': this.autoFeeding.weight
+        "status": this.autoFeeding.status?"off":"on"
       };
-      axios.put(url, data, {headers})
+      axios.post(url, data, {headers})
       .then((res) => {
         //perform success action
         if(this.autoFeeding.status){
