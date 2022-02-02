@@ -46,11 +46,12 @@ const createPresetFeed = async (req, res, next) => {
     return res.status(200).json(apiResponse({ status: APIStatus.FAIL, msg: 'Lịch đặt sẽ chạy khi tắt chức năng cho ăn tự động', data: rs }))
   }
 
+  const { weight: presetWeight, timeSchedule } = convertTimeSchedule(rs.presetFeed)
   const message = {
     DeviceId: deviceId,
     Task: '3',
-    Weight: rs.onClickFeedWeight,
-    TimeSchedule: convertTimeSchedule(rs.presetFeed)
+    Weight: presetWeight,
+    TimeSchedule: timeSchedule
   }
   mqttClient.publish('/command', JSON.stringify(message))
 
@@ -71,11 +72,12 @@ const updatePresetFeed = async (req, res, next) => {
     return res.status(200).json(apiResponse({ status: APIStatus.FAIL, msg: 'Lịch đặt sẽ chạy khi tắt chức năng cho ăn tự động', data: rs }))
   }
 
+  const { weight: presetWeight, timeSchedule } = convertTimeSchedule(rs.presetFeed)
   const message = {
     DeviceId: deviceId,
     Task: '3',
-    Weight: rs.onClickFeedWeight,
-    TimeSchedule: convertTimeSchedule(rs.presetFeed)
+    Weight: presetWeight,
+    TimeSchedule: timeSchedule
   }
   mqttClient.publish('/command', JSON.stringify(message))  
 
@@ -92,11 +94,12 @@ const deletePresetFeed = async (req, res, next) => {
   if (!rs) return res.status(404).json(apiResponse({ status: APIStatus.FAIL, msg: 'This preset doesnt exist' }))
 
   if(rs.petDetectedFeedWeight.status === 'off') {
+    const { weight, timeSchedule } = convertTimeSchedule(rs.presetFeed)
     const message = {
       DeviceId: deviceId,
       Task: '3',
-      Weight: rs.onClickFeedWeight,
-      TimeSchedule: convertTimeSchedule(rs.presetFeed)
+      Weight: weight,
+      TimeSchedule: timeSchedule
     }
     mqttClient.publish('/command', JSON.stringify(message))  
   }
@@ -140,11 +143,12 @@ const changePetDetectedStatus = async (req, res, next) => {
     }
     mqttClient.publish('/command', JSON.stringify(message))
   } else {
+    const { weight, timeSchedule } = convertTimeSchedule(rs.presetFeed)
     const message = {
       DeviceId: deviceId,
       Task: '3',
-      Weight: rs.onClickFeedWeight,
-      TimeSchedule: convertTimeSchedule(rs.presetFeed)
+      Weight: weight,
+      TimeSchedule: timeSchedule
     }
     mqttClient.publish('/command', JSON.stringify(message))  
   }

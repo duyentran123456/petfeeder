@@ -3,13 +3,20 @@ const convertTimeSchedule = (presets) => {
     return preset.status === 'on'
   })
 
-  const res = activePresets.map((preset) => {
+  const timeScheduleRes = activePresets.map((preset) => {
     const {date} = preset
     const hm = date.split(':')
     return hm.map( i => parseInt(i) )
   })
 
-  return res
+  const weightRes = activePresets.map((preset) => {
+    return preset.weight
+  })
+
+  return {
+    timeSchedule: timeScheduleRes,
+    weight: weightRes
+  }
 }
 
 module.exports = convertTimeSchedule
