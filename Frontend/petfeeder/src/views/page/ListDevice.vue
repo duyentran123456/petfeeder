@@ -8,7 +8,6 @@
             <th scope="col">#</th>
             <th scope="col">Id thiết bị</th>
             <th scope="col">Tên thiết bị</th>
-            <th scope="col">Trạng thái</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
@@ -18,9 +17,6 @@
             <th scope="row">{{ index+1 }}</th>
             <td>{{ device.deviceId }}</td>
             <td>{{ device.deviceName }}</td>
-            <td><div class="border border-success status-icon rounded text-white fw-bold"
-              :class="[device.petDetectedFeedWeight.status=='on'?'bg-success':'bg-danger']"
-            >{{ device.petDetectedFeedWeight.status }}</div></td>
             <td><i @click="removeDevice(device.deviceId)" class="far fa-trash-alt btn-delete"></i></td>
           </tr>
         </tbody>
