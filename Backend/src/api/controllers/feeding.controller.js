@@ -18,7 +18,7 @@ const feedOnClick = async (req, res, next) => {
     Task: '1',
     Weight: device.onClickFeedWeight
   }
-  mqttClient.publish('/command', JSON.stringify(message))
+  mqttClient.publish(`/command/${deviceId}`, JSON.stringify(message))
 
   return res.status(200).json(apiResponse({ status: APIStatus.SUCCESS, msg: 'Your pet is feeded' }))
 }
@@ -53,7 +53,7 @@ const createPresetFeed = async (req, res, next) => {
     Weight: presetWeight,
     TimeSchedule: timeSchedule
   }
-  mqttClient.publish('/command', JSON.stringify(message))
+  mqttClient.publish(`/command/${deviceId}`, JSON.stringify(message))
 
   return res.status(200).json(apiResponse({ status: APIStatus.SUCCESS, msg: 'Đặt lịch thành công',data: rs }))
 }
@@ -79,7 +79,7 @@ const updatePresetFeed = async (req, res, next) => {
     Weight: presetWeight,
     TimeSchedule: timeSchedule
   }
-  mqttClient.publish('/command', JSON.stringify(message))  
+  mqttClient.publish(`/command/${deviceId}`, JSON.stringify(message))  
 
   return res.status(200).json(apiResponse({ status: APIStatus.SUCCESS, data: rs }))
 }
@@ -101,7 +101,7 @@ const deletePresetFeed = async (req, res, next) => {
       Weight: weight,
       TimeSchedule: timeSchedule
     }
-    mqttClient.publish('/command', JSON.stringify(message))  
+    mqttClient.publish(`/command/${deviceId}`, JSON.stringify(message))  
   }
 
   return res.status(200).json(apiResponse({ status: APIStatus.SUCCESS, data: rs }))
@@ -121,7 +121,7 @@ const updatePetDetectedFeed = async (req, res, next) => {
       Task: '2',
       Weight: weight
     }
-    mqttClient.publish('/command', JSON.stringify(message))
+    mqttClient.publish(`/command/${deviceId}`, JSON.stringify(message))
   }
 
   return res.status(200).json(apiResponse({ status: APIStatus.SUCCESS, msg: 'update pet detected successfully', data: rs }))
@@ -141,7 +141,7 @@ const changePetDetectedStatus = async (req, res, next) => {
       Task: '2',
       Weight: rs.petDetectedFeedWeight.weight
     }
-    mqttClient.publish('/command', JSON.stringify(message))
+    mqttClient.publish(`/command/${deviceId}`, JSON.stringify(message))
   } else {
     const { weight, timeSchedule } = convertTimeSchedule(rs.presetFeed)
     const message = {
@@ -150,7 +150,7 @@ const changePetDetectedStatus = async (req, res, next) => {
       Weight: weight,
       TimeSchedule: timeSchedule
     }
-    mqttClient.publish('/command', JSON.stringify(message))  
+    mqttClient.publish(`/command/${deviceId}`, JSON.stringify(message))  
   }
   return res.status(200).json(apiResponse({ status: APIStatus.SUCCESS, msg: 'change pet detected status successfully', data: rs }))
 }
