@@ -1,7 +1,7 @@
 const APIStatus = require('../constants/APIStatus')
 const { changeOnClickWeightDb, createPresetFeedDb, updatePresetFeedDb, deletePresetFeedDb, updatePetDetectedFeedDb, changePetDetectedStatusDb } = require('../db/feeding.db')
 const { getDeviceByDeviceIdDb } = require('../db/device.db')
-const { createHistoryDb } = require('../db/history.db')
+// const { createHistoryDb } = require('../db/history.db')
 const apiResponse = require('../utils/apiResponse')
 const convertTimeSchedule = require('../utils/convertTimeSchedule')
 const mqttClient = require('../services/mqtt.service')
@@ -13,7 +13,7 @@ const feedOnClick = async (req, res, next) => {
   if (!user.devices.includes(deviceId)) return res.status(400).json(apiResponse({ status: APIStatus.FAIL, msg: 'You dont have this device' }))
   const device = await getDeviceByDeviceIdDb({ deviceId })
   if (device.petDetectedFeedWeight.status === 'on') return res.status(200).json(apiResponse({ status: APIStatus.FAIL, msg: 'Bạn không thể cho ăn trực tiếp khi đang ở chế độ cho ăn tự động' }))
-  await createHistoryDb({ deviceId, weight: device.onClickFeedWeight, time: new Date() });
+  // await createHistoryDb({ deviceId, weight: device.onClickFeedWeight, time: new Date() });
   const message = {
     DeviceId: deviceId,
     Task: '1',
