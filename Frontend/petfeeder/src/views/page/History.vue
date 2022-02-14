@@ -28,7 +28,12 @@
               label="operatorName"
               track-by="operatorID"
             ></multiselect>
-            <input type="number" placeholder="Lượng thức ăn" maxlength="20" />
+            <input
+              v-model="valueWeight"
+              type="number"
+              placeholder="Lượng thức ăn"
+              maxlength="20"
+            />
             <multiselect
               v-model="valueUnit"
               class="feed-detail-unit"
@@ -68,9 +73,12 @@
                   lang="lang"
                 ></date-picker>
                 <div class="hour from-hour flex">
-                  <vue-timepicker></vue-timepicker>
+                  <vue-timepicker v-model="timeFeedFrom"></vue-timepicker>
                   <i v-show="!switchTimeFeedTo" class="fas fa-arrow-right"></i>
-                  <vue-timepicker v-show="!switchTimeFeedTo"></vue-timepicker>
+                  <vue-timepicker
+                    v-model="timeFeedTo"
+                    v-show="!switchTimeFeedTo"
+                  ></vue-timepicker>
                 </div>
               </div>
             </div>
@@ -95,7 +103,7 @@
                   lang="lang"
                 ></date-picker>
                 <div class="hour to-hour flex">
-                  <vue-timepicker></vue-timepicker>
+                  <vue-timepicker v-model="timeFeedTo"></vue-timepicker>
                 </div>
               </div>
             </div>
@@ -127,8 +135,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(history, index) in historyDevice"
-          :key="index">
+          <tr v-for="(history, index) in historyDeviceView" :key="index">
             <td>{{ history.date }}</td>
             <td>{{ history.time }}</td>
             <td>{{ history.weight }}g</td>
@@ -175,15 +182,18 @@ export default {
         { operatorID: 2, operatorName: "Lớn hơn" },
         { operatorID: 3, operatorName: "Nhỏ hơn" },
       ],
+      valueWeight: null,
+      timeFeedFrom: null,
+      timeFeedTo: null,
       //combo trọng lượng thức ăn
       valueUnit: { unitID: 1, unitName: "g" },
-      weightUnit: [
-        { unitID: 1, unitName: "g" },
-        { unitID: 2, unitName: "kg" },
-      ],
-
-      //thông tin lịch sử
-      historyDevice: [], 
+      weightUnit: [{ unitID: 1, unitName: "g" }],
+      //thông tin lịch sử nhận từ server
+      historyDevice: [],
+      //thông tin lich sử hiển thị
+      historyDeviceView: [],
+      //Lịch sử lọc theo trọng lượng
+      historyWeight: null,
     };
   },
 
@@ -244,7 +254,19 @@ export default {
           )
           .then((response) => {
             if (response.data.status == "success") {
-              this.historyDevice = this.convertHistory(response.data.data.detail);
+              if (response.data.data) {
+                this.historyDevice = this.convertHistory(
+                  response.data.data.detail
+                );
+                this.historyDeviceView = this.convertHistoryView(
+                  response.data.data.detail
+                );
+              } else {
+                this.addToast({
+                  message: "Không có thông tin lịch sử cho ăn!",
+                  type: "warning",
+                });
+              }
             } else {
               this.addToast({
                 message: `${response.data.msg}`,
@@ -263,6 +285,22 @@ export default {
       await this.hideLoading();
     },
 
+    convertHistory(data) {
+      if (data.length > 0) {
+        let history = [];
+        data.map((item) => {
+          let dateTime = new Date(item.time);
+          history.push({
+            weight: item.weight,
+            time: dateTime,
+          });
+        });
+        return history;
+      } else {
+        return [];
+      }
+    },
+
     /**
      * Convert thông tin lịch sử lấy về thành dữ liệu hiển thị lên màn hình
      * Trả về dạng mảng obj {
@@ -271,8 +309,8 @@ export default {
      *    time
      * }
      */
-    convertHistory(data) {
-      if(data.length>0) {
+    convertHistoryView(data) {
+      if (data.length > 0) {
         let history = [];
         data.map((item) => {
           let dateTime = new Date(item.time);
@@ -281,11 +319,10 @@ export default {
             weight: item.weight,
             date: arrDateTime[0],
             time: arrDateTime[1],
-          })
+          });
         });
         return history;
-      }
-      else { 
+      } else {
         return [];
       }
     },
@@ -299,11 +336,6 @@ export default {
       return `${unitName}`;
     },
 
-    //Lọc
-    filterHistory() {
-      return;
-    },
-
     //Ẩn bộ Lọc
     hideFilter(e) {
       this.isShowFilter = false;
@@ -312,6 +344,87 @@ export default {
     //Hiện bộ Lọc
     showFilter(e) {
       this.isShowFilter = true;
+    },
+
+    //Lọc
+    filterHistory() {
+      if (this.switchWeightFeed) {
+        //Có lọc theo lượng thức ăn
+        this.filterWeightFeed();
+      }
+      if (this.switchTimeFeed) {
+        //Có lọc theo thời gian cho ăn
+        this.filterTimeFeed();
+      }
+      if (!this.switchWeightFeed && !this.switchTimeFeed) {
+        this.historyDeviceView = this.convertHistoryView(this.historyDevice);
+      }
+    },
+
+    filterWeightFeed() {
+      let historyResult = [];
+      switch (this.valueOperator.operatorID) {
+        case 1:
+          this.historyDevice.map((history) => {
+            if (history.weight == this.valueWeight) {
+              historyResult.push(history);
+            }
+          });
+          break;
+        case 2:
+          this.historyDevice.map((history) => {
+            if (history.weight > this.valueWeight) {
+              historyResult.push(history);
+            }
+          });
+          break;
+        case 3:
+          this.historyDevice.map((history) => {
+            if (history.weight < this.valueWeight) {
+              historyResult.push(history);
+            }
+          });
+          break;
+      }
+      this.historyWeight = historyResult;
+      this.historyDeviceView = this.convertHistoryView(historyResult);
+    },
+
+    filterTimeFeed() {
+      let historyResult = [];
+      let timeStringFrom, timeStringTo, dateTimeFrom, dateTimeTo;
+      if (!this.switchTimeFeedTo) {
+        //Lọc Trong ngày
+        let date = this.dateFeedFrom;
+        timeStringFrom =
+          this.timeFeedFrom.HH + ":" + this.timeFeedFrom.mm + ":00";
+        timeStringTo = this.timeFeedTo.HH + ":" + this.timeFeedTo.mm + ":00";
+        dateTimeFrom = new Date(date + " " + timeStringFrom);
+        dateTimeTo = new Date(date + " " + timeStringTo);
+      } else {
+        //Lọc từ ngày đến ngày
+        let dateFrom = this.dateFeedFrom,
+            dateTo = this.dateFeedTo;
+        timeStringFrom =
+          this.timeFeedFrom.HH + ":" + this.timeFeedFrom.mm + ":00";
+        timeStringTo = this.timeFeedTo.HH + ":" + this.timeFeedTo.mm + ":00";
+        dateTimeFrom = new Date(dateFrom + " " + timeStringFrom);
+        dateTimeTo = new Date(dateTo + " " + timeStringTo);
+      }
+      if (this.historyWeight) {
+        this.historyWeight.map((history) => {
+          if (history.time >= dateTimeFrom && history.time <= dateTimeTo) {
+            historyResult.push(history);
+          }
+        });
+      } else {
+        this.historyDevice.map((history) => {
+          if (history.time >= dateTimeFrom && history.time <= dateTimeTo) {
+            historyResult.push(history);
+          }
+        });
+      }
+      this.historyDeviceView = this.convertHistoryView(historyResult);
     },
   },
 };

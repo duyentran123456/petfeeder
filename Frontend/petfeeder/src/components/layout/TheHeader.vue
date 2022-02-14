@@ -28,7 +28,7 @@
     <div class="header-right flex">
       <i class="far fa-question-circle"></i>
       <i class="far fa-bell"></i>
-      <div class="usename">Nguyễn Tất Thanh</div>
+      <div class="usename"></div>
       <div class="avatar-wrap">
         <img class="avatar" src="../../assets/img/avatar.png" alt="" />
         <ul class="avatar-option">
