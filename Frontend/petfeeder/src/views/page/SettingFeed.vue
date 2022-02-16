@@ -345,7 +345,7 @@ export default {
         //error.response.status check status code
         //error network
         this.addToast({
-              message: "Lỗi cho quá trình cho ăn!",
+              message: "Lỗi trong quá trình cho ăn!",
               type: "error",
             });
       })

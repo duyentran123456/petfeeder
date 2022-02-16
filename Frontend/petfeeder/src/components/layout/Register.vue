@@ -37,6 +37,7 @@
 <script>
 import axios from 'axios'; 
 import VueRouter from "vue-router";
+import { mapMutations } from "vuex";
 
 export default {
   name: "Register",
@@ -55,19 +56,25 @@ export default {
     }
   },
   methods:{
+    ...mapMutations(["addToast"]),
     submitForm(e){
       e.preventDefault();
       axios.post('http://127.0.0.1:8000/auth/user/signup', this.form)
       .then((res) => {
-        console.log("response");
+        console.log(res);
         //perform success action
-        if(res.status == "success"){
+        if(res.data.status == "success"){
           this.$router.push({name: 'Login'});
+          this.addToast({
+              message: "Đăng ký thành công",
+              type: "success",
+            });
         }
       })
       .catch((error) => {
         //error.response.status check status code
         //error network
+        console.log(error);
          this.msg = "Đăng ký thất bại, hãy kiểm tra lại thông tin đăng ký";
       })
       .finally(() => {

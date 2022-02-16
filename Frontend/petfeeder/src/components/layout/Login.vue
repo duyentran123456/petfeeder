@@ -26,6 +26,7 @@
                 v-model="inforLogin.username"
                 type="text"
                 class="form-control fs-3"
+                placeholder="Nhập tên đăng nhập của bạn ..."
               />
             </div>
             <div class="form-group mb-4">
@@ -34,6 +35,7 @@
                 v-model="inforLogin.password"
                 type="password"
                 class="form-control fs-3"
+                placeholder="Nhập mật khẩu của bạn ..."
               />
             </div>
             <div class="text-center">

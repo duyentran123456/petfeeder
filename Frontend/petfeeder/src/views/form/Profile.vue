@@ -6,8 +6,8 @@
       :isResizable="false"
       :w="650"
       :minw="650"
-      :h="388"
-      :minh="388"
+      :h="430"
+      :minh="488"
       :x="440"
       :y="180"
     >
@@ -44,6 +44,7 @@
                       class="input"
                       maxlength="100"
                       placeholder="Nhập họ và tên"
+                      v-model="displayName"
                     />
                   </div>
                 </div>
@@ -74,6 +75,7 @@
                           type="radio"
                           value="0"
                           :checked="true"
+                          v-model="gender"
                         />
                         <span class="body-item-gender-checkmark"></span>
                         <span class="body-item-gender-text">Nam</span>
@@ -84,6 +86,7 @@
                           type="radio"
                           value="1"
                           :checked="false"
+                          v-model="gender"
                         />
                         <span class="body-item-gender-checkmark"></span>
                         <span class="body-item-gender-text">Nữ</span>
@@ -94,6 +97,7 @@
                           type="radio"
                           value="2"
                           :checked="false"
+                          v-model="gender"
                         />
                         <span class="body-item-gender-checkmark"></span>
                         <span class="body-item-gender-text">Khác</span>
@@ -114,6 +118,7 @@
                       class="input"
                       maxlength="100"
                       placeholder="Nhập số điện thoại"
+                      v-model="phone"
                     />
                   </div>
                 </div>
@@ -128,6 +133,22 @@
                       class="input"
                       maxlength="100"
                       placeholder="Nhập email"
+                      v-model="email"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Address -->
+              <div class="body-row flex-column">
+                <div class="body-column">
+                  <div class="body-item control">
+                    <div class="label">Địa chỉ</div>
+                    <input
+                      class="input"
+                      maxlength="100"
+                      placeholder="Nhập địa chỉ"
+                      v-model="address"
                     />
                   </div>
                 </div>
@@ -153,9 +174,11 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { mapMutations } from "vuex";
 import VueDragResize from "vue-drag-resize";
 import BaseButton from "../../components/base/BaseButton.vue";
+
 //Datepicker
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
@@ -168,7 +191,12 @@ export default {
       lang: "vi",
       //ảnh hiển thị
       imageAvatar: null,
+      displayName: null,
       date: null,
+      phone: null,
+      email: null,
+      gender: null,
+      address: null
     };
   },
   components: {
@@ -180,8 +208,7 @@ export default {
   watch: {},
 
   methods: {
-    ...mapMutations(["formProfile"]),
-
+    ...mapMutations(["formProfile","addToast"]),
     /**
      * Đóng form
      */
@@ -193,7 +220,46 @@ export default {
      * Lưu thông tin
      */
     saveProfile() {
-      return;
+      let gender = null;
+      if(this.gender == 0){
+        gender = "male";
+      }else if(this.gender == 1){
+        gender = "female";
+      }else{
+        gender = "others";
+      }
+      const data = {
+        gender: gender,
+        fullname: this.displayName,
+        address: this.address
+
+      }
+      console.log(data);
+      const token = window.localStorage.getItem('token');
+      const headers = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+      axios.post("http://127.0.0.1:8000/api/info", data ,{headers})
+      .then((res) => {
+        //perform success action
+        this.addToast({
+              message: "Cập nhật thông tin người dùng thành công!",
+              type: "success",
+            });
+      })
+      .catch((error) => {
+        //error.response.status check status code
+        //error network
+        console.log(error);
+        this.addToast({
+              message: "Lỗi cập nhật!",
+              type: "error",
+            });
+      })
+      .finally(() => {
+        //perform action in always
+      });
     },
 
     /**

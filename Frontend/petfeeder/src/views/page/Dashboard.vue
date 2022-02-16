@@ -31,28 +31,15 @@
             <th scope="col">#</th>
             <th scope="col">Người dùng</th>
             <th scope="col">Thiết bị</th>
-            <th scope="col">Trạng thái</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Nghia</td>
-            <td>Id123</td>
-            <td>
-              <div
-                class="
-                  border border-success
-                  status-icon
-                  bg-success
-                  rounded
-                  text-white
-                  fw-bold
-                "
-              >
-                On
-              </div>
-            </td>
+          <tr v-for="(user, index) in dashboardAdmin.users"
+          :key="index">
+            <td>{{index + 1}}</td>
+            <td>{{user.username}}</td>
+            <td><span v-if="user.devices.length == 0" class="text-danger"> Chưa đăng ký thiết bị</span>
+              <span v-else v-for="(device, index) in user.devices.map((e) => ('thietbi' + e))" :key="index" class="me-3 border px-2 rounded bg-info">{{device}}</span></td>
           </tr>
         </tbody>
       </table>
