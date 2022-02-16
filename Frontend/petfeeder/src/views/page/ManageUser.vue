@@ -7,6 +7,7 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">Username</th>
+            <th scope="col">Fullname</th>
             <th scope="col">Email</th>
             <th scope="col">Phone</th>
             <th scope="col">Gender</th>
@@ -20,8 +21,9 @@
           :key="index">
             <th scope="row">{{ index+1 }}</th>
             <td>{{ user.username }}</td>
+            <td><span v-if="!user.fullName" class="text-danger" >Chưa cập nhật</span>{{user.fullName}}</td>
             <td>{{ user.email }}</td>
-            <td>0123456789</td>
+            <td><span v-if="!user.fullName" class="text-danger" >Chưa cập nhật</span>{{user.phone}}</td>
             <td>{{ user.gender }}</td>
             <td>Hanoi, VietNam</td>
             <!-- <td><span v-if="user.devices.length == 0" class="text-danger"> Chưa đăng ký thiết bị</span>

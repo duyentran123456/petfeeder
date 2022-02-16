@@ -6,7 +6,7 @@
       :isResizable="false"
       :w="650"
       :minw="650"
-      :h="430"
+      :h="388"
       :minh="488"
       :x="440"
       :y="180"
@@ -19,7 +19,7 @@
             <i @click="hideForm" class="fas fa-times"></i>
           </div>
           <div class="profile-body flex">
-            <div class="profile-body-left flex-column">
+            <!-- <div class="profile-body-left flex-column">
               <img v-if="imageAvatar" :src="imageAvatar" />
               <img v-else src="../../assets/img/avatar.svg" />
               <label for="image-upload">
@@ -31,7 +31,7 @@
                 accept="image/jpeg"
                 @change="uploadImage"
               />
-            </div>
+            </div> -->
             <div class="profile-body-right flex-column">
               <!-- Họ và tên -->
               <div class="body-row flex-column">
@@ -56,10 +56,14 @@
                   <div class="body-item body-item-birthday control">
                     <div class="label">Ngày sinh</div>
                     <date-picker
-                    v-model="date"
+                      v-model="date"
                       value-type="YYYY-MM-DD"
                       format="DD/MM/YYYY"
                       placeholder="__/__/____"
+                      :model-config="{
+                        type: 'string',
+                        mask: 'DD/MM/YYYY',
+                      }"
                       :disabled-date="(date) => date > new Date()"
                       lang="lang"
                     ></date-picker>
@@ -140,7 +144,7 @@
               </div>
 
               <!-- Address -->
-              <div class="body-row flex-column">
+              <!-- <div class="body-row flex-column">
                 <div class="body-column">
                   <div class="body-item control">
                     <div class="label">Địa chỉ</div>
@@ -152,7 +156,7 @@
                     />
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="profile-footer flex">
@@ -204,6 +208,32 @@ export default {
     BaseButton,
     DatePicker,
   },
+  created(){
+      const url = 'http://127.0.0.1:8000/api/users/info';
+      const token = window.localStorage.getItem('token');
+      const headers = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+      const data = {};
+      axios.get(url, {headers})
+      .then((res) => {
+        //perform success action
+        this.email = res.data.data.info.email;
+        this.phone = res.data.data.info.phone;
+        this.date = res.data.data.info.dateOfBirth;
+        this.displayName = res.data.data.info.fullName;
+        this.gender = res.data.data.info.gender == "male"?0:(res.data.data.info.gender == "female")?1:2;
+      })
+      .catch((error) => {
+        //error.response.status check status code
+        //error network
+        console.log(error);
+      })
+      .finally(() => {
+        //perform action in always
+      });
+  },
   computed: {},
   watch: {},
 
@@ -215,7 +245,9 @@ export default {
     hideForm() {
       this.formProfile(false);
     },
-
+    formatDate(date){
+      return date.substr(8,2) + "/" + date.substr(5,2) + "/" + date.substr(0,4);
+    },
     /**
      * Lưu thông tin
      */
@@ -228,19 +260,22 @@ export default {
       }else{
         gender = "others";
       }
-      const data = {
+      console.log(this.date);
+      const data = JSON.stringify({
+        fullName: this.displayName,
+        phone: this.phone,
+        email: this.email,
         gender: gender,
-        fullname: this.displayName,
-        address: this.address
-
-      }
+        dateOfBirth: this.formatDate(this.date)
+      });
       console.log(data);
       const token = window.localStorage.getItem('token');
+      const url = "http://127.0.0.1:8000/api/users/info";
       const headers = {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`
       }
-      axios.post("http://127.0.0.1:8000/api/info", data ,{headers})
+      axios.post(url, data ,{headers})
       .then((res) => {
         //perform success action
         this.addToast({
