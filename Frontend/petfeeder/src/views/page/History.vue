@@ -136,8 +136,8 @@
         </thead>
         <tbody>
           <tr v-for="(history, index) in historyDeviceView" :key="index">
-            <td>{{ history.date }}</td>
             <td>{{ history.time }}</td>
+            <td>{{ history.date }}</td>
             <td>{{ history.weight }}g</td>
           </tr>
         </tbody>
