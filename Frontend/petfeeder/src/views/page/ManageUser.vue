@@ -11,7 +11,6 @@
             <th scope="col">Email</th>
             <th scope="col">Phone</th>
             <th scope="col">Gender</th>
-            <th scope="col">Address</th>
             <!-- <th scope="col">Devices</th> -->
             <th scope="col">Action</th>
           </tr>
@@ -25,7 +24,6 @@
             <td>{{ user.email }}</td>
             <td><span v-if="!user.fullName" class="text-danger" >Chưa cập nhật</span>{{user.phone}}</td>
             <td>{{ user.gender }}</td>
-            <td>Hanoi, VietNam</td>
             <!-- <td><span v-if="user.devices.length == 0" class="text-danger"> Chưa đăng ký thiết bị</span>
               <span v-for="(device, index) in user.devices.map((e) => ('thietbi' + e))" :key="index" class="me-3 border px-2 rounded bg-info">{{device}}</span></td> -->
             <td><i class="far fa-trash-alt btn-delete"></i></td>
