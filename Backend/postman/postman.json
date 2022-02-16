@@ -165,8 +165,58 @@
 					"name": "Get user info",
 					"request": {
 						"method": "GET",
-						"header": [],
-						"url": null
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/users/info",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user info",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{userToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullName\": \"Trần Thị Thanh Duyên\",\r\n    \"phone\": \"0123456789\",\r\n    \"email\": \"newemail@gmail.com\",\r\n    \"gender\": \"female\",\r\n    \"dateOfBirth\": \"06/15/2000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/users/info",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"info"
+							]
+						}
 					},
 					"response": []
 				}

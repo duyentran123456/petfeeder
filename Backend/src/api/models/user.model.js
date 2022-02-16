@@ -36,8 +36,8 @@ const UserSchema = new mongoose.Schema({
   fullName: {
     type: String
   },
-  address: {
-    type: String
+  dateOfBirth: {
+    type: Date
   },
   devices: [{
     type: String

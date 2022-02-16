@@ -11,7 +11,9 @@ const updateInfoValidation = {
   body: Joi.object({
     gender: Joi.string().valid('male', 'female', 'others'),
     fullName: Joi.string(),
-    address: Joi.string()
+    phone: Joi.string(),
+    email: Joi.string().email(),
+    dateOfBirth: Joi.string().regex(/^\d{2}\/\d{2}\/\d{4}$/),
   })
 }
 

@@ -6,11 +6,10 @@ const apiResponse = require('../utils/apiResponse')
 
 const updateInfo = async (req, res, next) => {
   const user = req.user
-  const { gender, fullName, address } = req.body
+  const userr= await updateUserDb({ userId: user._id, newInfo: req.body})
+  const {password, _id, ...info} = userr._doc
 
-  const userr = updateUserDb({ userId: user._id, newInfo })
-
-  return res.status(200).json(apiResponse({ status: APIStatus.SUCCESS, msg: 'update user successfully' }))
+  return res.status(200).json(apiResponse({ status: APIStatus.SUCCESS, msg: 'update user successfully', data: {user: info} }))
 }
 
 const getInfo = async (req, res, next) => {

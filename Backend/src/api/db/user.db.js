@@ -26,14 +26,14 @@ const createUserDb = async (query) => {
 
 const updateUserDb = async (query) => {
   const { userId, newInfo } = query
-  const { phone, gender, avatar, fullName, address } = newInfo
+  const { phone, gender, fullName, dateOfBirth, email } = newInfo
 
   const user = await User.findById(userId)
   user.phone = phone
   user.gender = gender
-  user.avatar = avatar
   user.fullName = fullName
-  user.address = address
+  user.dateOfBirth = new Date(dateOfBirth)
+  user.email = email
 
   const rs = await user.save()
   return rs
